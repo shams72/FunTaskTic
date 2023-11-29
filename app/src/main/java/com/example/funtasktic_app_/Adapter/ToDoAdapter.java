@@ -1,5 +1,6 @@
 package com.example.funtasktic_app_.Adapter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,9 +67,20 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         return toDoList.size();
     }
 
+    public Context getContext(){
+        return activity;
+    }
+
     public void setTasks(List<ToDoModel>toDoList){
         this.toDoList=toDoList;
         notifyDataSetChanged();
+    }
+
+    public void deleteItem(int position) {
+        ToDoModel item = toDoList.get(position);
+        db.deleteTask(item.getId());
+        toDoList.remove(position);
+        notifyItemRemoved(position);
     }
 
     public void editItem(int position) {
