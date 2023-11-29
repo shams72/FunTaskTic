@@ -17,7 +17,7 @@
         android:layout_alignParentEnd="true"
         android:textSize="16sp"
         android:text="Speichern"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/darker_gray"
         android:textAllCaps="false"
         android:background="@android:color/transparent"/>
 

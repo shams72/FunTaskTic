@@ -25,10 +25,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
 
-    private DatabaseHandler(Context context){
+    public DatabaseHandler(Context context){
         super(context,Name,null,VERSION);
     }
 
+    @Override
     public void onCreate(SQLiteDatabase db){
         db.execSQL(CREATE_TO_DO_TABLE);
     }
@@ -51,7 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    public List<ToDoModel> getAllTask(){
+    public List<ToDoModel> getAllTasks(){
         List<ToDoModel> taskList= new ArrayList<>();
         Cursor cur=null;
         db.beginTransaction();
@@ -62,6 +63,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     do{
 
                         ToDoModel task =new ToDoModel();
+
                         int column_ID_Index = cur.getColumnIndex(ID);
                         int column_START_Index = cur.getColumnIndex(TASK);
                         int column_STATUS_Index = cur.getColumnIndex(STATUS);
