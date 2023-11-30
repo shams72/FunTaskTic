@@ -53,39 +53,41 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public List<ToDoModel> getAllTasks(){
-        List<ToDoModel> taskList= new ArrayList<>();
-        Cursor cur=null;
+        List<ToDoModel> taskList = new ArrayList<>();
+        Cursor cur = null;
         db.beginTransaction();
-        try{
-            cur=db.query(TODO_TABLE,null,null,null,null,null,null,null);
-            if(cur!=null){
-                if(cur.moveToFirst()){
-                    do{
-
-                        ToDoModel task =new ToDoModel();
-
+        try {
+            cur = db.query(TODO_TABLE, null, null, null, null, null, null, null);
+            if (cur != null) {
+                if (cur.moveToFirst()) {
+                    do {
+                        ToDoModel task = new ToDoModel();
                         int column_ID_Index = cur.getColumnIndex(ID);
-                        int column_START_Index = cur.getColumnIndex(TASK);
+                        int column_TASK_Index = cur.getColumnIndex(TASK);
                         int column_STATUS_Index = cur.getColumnIndex(STATUS);
 
                         if (column_ID_Index != -1) {
                             task.setId(cur.getInt(column_ID_Index));
                         }
 
-                        if (column_START_Index != -1) {
-                            task.setTask(cur.getString(column_START_Index));
+                        if (column_TASK_Index != -1) {
+                            task.setTask(cur.getString(column_TASK_Index));
                         }
 
                         if (column_STATUS_Index != -1) {
                             task.setStatus(cur.getInt(column_STATUS_Index));
                         }
 
-                    }while(cur.moveToNext());
+                        taskList.add(task); // Add the task to the list
+
+                    } while (cur.moveToNext());
                 }
             }
-        }finally {
+        } finally {
             db.endTransaction();
-            cur.close();
+            if (cur != null) {
+                cur.close();
+            }
         }
         return taskList;
     }
