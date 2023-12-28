@@ -26,7 +26,7 @@ public class LoginPage  extends AppCompatActivity {
             public void onClick(View v){
                 if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")){
                     Toast.makeText(LoginPage.this,"LOGIN SUCCESFULL",Toast.LENGTH_SHORT).show();
-                    Intent intent =new Intent(LoginPage.this,MainActivity.class);
+                    Intent intent = new Intent(LoginPage.this ,MainActivity.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(LoginPage.this,"Login Unsuccessfull.Please Try Again!!",Toast.LENGTH_SHORT).show();
