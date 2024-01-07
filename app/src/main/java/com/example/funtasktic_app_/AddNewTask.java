@@ -144,7 +144,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                             updated_text += "------------------------------------------------------------------------" + "\n"
                                 + "To Be Done By:-" + " " + year + "-" + month + "-" + day;
                         }else{
-                            updated_text += "Date Not Selected";
+                            updated_text += "";
                         }
 
 
