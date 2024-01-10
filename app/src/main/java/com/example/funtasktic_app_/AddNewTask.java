@@ -1,7 +1,7 @@
 package com.example.funtasktic_app_;
+import android.content.DialogInterface;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 
 import androidx.core.content.ContextCompat;
@@ -18,10 +19,15 @@ import com.example.funtasktic_app_.Model.ToDoModel;
 import com.example.funtasktic_app_.Utils.DatabaseHandler;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.util.Calendar;
+import android.content.DialogInterface;
+
+
 public class AddNewTask extends BottomSheetDialogFragment {
 
     public static final String TAG = "ActionBottomDialog";
     private EditText newTaskText;
+    private Calendar date;
     private Button newTaskSaveButton;
     private DatabaseHandler db;
 
@@ -52,7 +58,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
         boolean isUpdate = false;
         final Bundle bundle = getArguments();
 
-        if(bundle != null) {
+        if (bundle != null) {
             isUpdate = true;
             String task = bundle.getString("task");
             newTaskText.setText(task);
@@ -77,8 +83,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 if (s.toString().equals("")) {
                     newTaskSaveButton.setEnabled(false);
                     newTaskSaveButton.setTextColor(ContextCompat.getColor(getContext(), R.color.grey));
-                }
-                else {
+                } else {
                     newTaskSaveButton.setEnabled(true);
                     newTaskSaveButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
                 }
@@ -91,29 +96,94 @@ public class AddNewTask extends BottomSheetDialogFragment {
         });
 
         boolean finalIsUpdate = isUpdate;
+        final int[] index = {0};
+        CalendarView calendarView = getView().findViewById(R.id.calendarView);
+
+
         newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = newTaskText.getText().toString();
-                if (finalIsUpdate) {
-                    db.updateTask(bundle.getInt("id"), text);
+
+
+                String text ="";
+                String updated_text="";
+
+                if (newTaskText != null) {
+
+                    if(newTaskText.getText().toString() == " "){
+                        text += "Please Add a Text" + "\n" +
+                                "------------------------------------------------------------------------" + "\n";
+
+
+                    }else {
+                        text +=  newTaskText.getText().toString() + "\n" +
+                                "------------------------------------------------------------------------" + "\n";
+                    }
+
+
+                    if (date != null) {
+                        // Extract date information from Calendar
+                        int year = date.get(Calendar.YEAR);
+                        int month = date.get(Calendar.MONTH) + 1; // Calendar months are zero-based
+                        int day = date.get(Calendar.DAY_OF_MONTH);
+
+                        text += "To Be Done By:-" + " " + year + "-" + month + "-" + day;
+                    }else{
+                        text += "Date Not Selected";
+                    }
+
+                    if (finalIsUpdate) {
+                        updated_text = newTaskText.getText().toString() ;
+
+                        if (date != null) {
+                            // Extract date information from Calendar
+                            int year = date.get(Calendar.YEAR);
+                            int month = date.get(Calendar.MONTH) + 1; // Calendar months are zero-based
+                            int day = date.get(Calendar.DAY_OF_MONTH);
+
+                            updated_text += "------------------------------------------------------------------------" + "\n"
+                                + "To Be Done By:-" + " " + year + "-" + month + "-" + day;
+                        }else{
+                            updated_text += "";
+                        }
+
+
+                        db.updateTask(bundle.getInt("id"), updated_text);
+                    } else {
+                        ToDoModel task = new ToDoModel();
+                        task.setTask(text);
+                        task.setStatus(0);
+                        db.insertTask(task);
+
+
+
+                    }
+                    dismiss();
                 }
-                else {
-                    ToDoModel task = new ToDoModel();
-                    task.setTask(text);
-                    task.setStatus(0);
-                    db.insertTask(task);
-                }
-                dismiss();
+
+            }
+        });
+
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                // Update the 'date' variable with the selected date
+                date = Calendar.getInstance();
+                date.set(Calendar.YEAR, year);
+                date.set(Calendar.MONTH, month);
+                date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             }
         });
     }
 
     @Override
-    public void onDismiss( DialogInterface dialog) {
+    public void onDismiss(DialogInterface dialog) {
         Activity activity = getActivity();
         if (activity instanceof DialogCloseListener) {
             ((DialogCloseListener)activity).handleDialogClose(dialog);
         }
     }
 }
+
+
