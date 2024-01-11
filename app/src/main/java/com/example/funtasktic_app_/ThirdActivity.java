@@ -21,6 +21,8 @@ public class ThirdActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ThirdActivity.this ,SecondActivity.class);
                 startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
             }
         });
     }
