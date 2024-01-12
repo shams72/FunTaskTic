@@ -1,5 +1,6 @@
 package com.example.funtasktic_app_.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.funtasktic_app_.AddNewTask;
@@ -23,10 +25,10 @@ import java.util.List;
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     private List<ToDoModel> toDoList;
-    private MainActivity activity;
+    private Activity activity;
     private DatabaseHandler db;
 
-    public ToDoAdapter(DatabaseHandler db, MainActivity activity) {
+    public ToDoAdapter(DatabaseHandler db, Activity activity) {
         this.db = db;
         this.activity = activity;
         //this.toDoList = new ArrayList<>();
@@ -88,9 +90,12 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         Bundle bundle = new Bundle();
         bundle.putInt("id", item.getId());
         bundle.putString("task", item.getTask());
+
+        FragmentActivity fragmentActivity = (FragmentActivity) activity;
+
         AddNewTask fragment = new AddNewTask();
         fragment.setArguments(bundle);
-        fragment.show(activity.getSupportFragmentManager(), AddNewTask.TAG);
+        fragment.show(fragmentActivity.getSupportFragmentManager(), AddNewTask.TAG);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
