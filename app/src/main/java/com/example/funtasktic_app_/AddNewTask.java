@@ -184,6 +184,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
 
                         db.updateTask(bundle.getInt("id"), updated_text);
+                        db.updatePriority(bundle.getInt("id"),selectedPriority);
                     } else {
                         ToDoModel task = new ToDoModel();
                         task.setTask(text);
