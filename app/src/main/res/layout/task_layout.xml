@@ -10,16 +10,16 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="8dp">
 
         <CheckBox
             android:id="@+id/todoCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tool:text="Dies ist eine Beispielaufgabe innerhalb der Anwendung."
+            android:buttonTint="@android:color/holo_purple"
             android:paddingStart="8dp"
-            android:buttonTint="@android:color/holo_purple"/>
+            tool:text="Dies ist eine Beispielaufgabe innerhalb der Anwendung." />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

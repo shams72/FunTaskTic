@@ -22,21 +22,19 @@ import java.util.List;
 import java.util.Objects;
 
 import kotlin.collections.ArrayDeque;
-
-public class MainActivity extends AppCompatActivity implements DialogCloseListener{
+public class SecondActivity extends AppCompatActivity implements DialogCloseListener{
 
     private RecyclerView taskRecyclerView;
     private ToDoAdapter taskAdapter;
     private FloatingActionButton fab;
     private List<ToDoModel>taskList;
     private DatabaseHandler db;
-    private Button buttonToSecond;
-
+    private Button buttonToMain;
+    private Button buttonToThird;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_second);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -47,17 +45,17 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
         taskList=new ArrayList<>();
 
-        taskRecyclerView=findViewById(R.id.tasksRecyclerView);
+        taskRecyclerView=findViewById(R.id.tasksRecyclerViewSecond);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         taskAdapter =new ToDoAdapter(db,this);
         taskRecyclerView.setAdapter(taskAdapter);
 
-        fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fabSecond);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
         itemTouchHelper.attachToRecyclerView(taskRecyclerView);
 
-        taskList = db.getTasksByPriority("High");
+        taskList = db.getTasksByPriority("Medium");
         Collections.reverse(taskList);
 
         taskAdapter.setTasks(taskList);
@@ -69,11 +67,22 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
             }
         });
 
-        buttonToSecond = findViewById(R.id.buttonToSecond);
-        buttonToSecond.setOnClickListener(new View.OnClickListener() {
+        buttonToMain = findViewById(R.id.buttonToMain);
+        buttonToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this ,SecondActivity.class);
+                Intent intent = new Intent(SecondActivity.this ,MainActivity.class);
+                startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+            }
+        });
+
+        buttonToThird = findViewById(R.id.buttonToThird);
+        buttonToThird.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SecondActivity.this ,ThirdActivity.class);
                 startActivity(intent);
             }
         });
@@ -81,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
     @Override
     public void handleDialogClose(DialogInterface dialog) {
-        taskList = db.getTasksByPriority("High");
+        taskList = db.getTasksByPriority("Medium");
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
         taskAdapter.notifyDataSetChanged();

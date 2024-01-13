@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.funtasktic_app_.Model.ToDoModel;
 
@@ -20,8 +21,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String ID="id";
     private static final String TASK="task";
     private static final String STATUS="status";
-    private static final String CREATE_TO_DO_TABLE="CREATE TABLE " + TODO_TABLE + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TASK + " TEXT, "
-            + STATUS + " INTEGER)";
+    private static final String PRIORITY="PRIORITY";
+    private static final String CREATE_TO_DO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" +
+            ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            TASK + " TEXT, " +
+            STATUS + " INTEGER, " +
+            PRIORITY + " TEXT) ";
 
     private SQLiteDatabase db;
 
@@ -48,9 +53,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(TASK,task.getTask());
         cv.put(STATUS,0);
+        cv.put(PRIORITY,task.getPriority());
         db.insert(TODO_TABLE,null,cv);
-
     }
+
 
     public List<ToDoModel> getAllTasks(){
         List<ToDoModel> taskList = new ArrayList<>();
@@ -65,6 +71,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         int column_ID_Index = cur.getColumnIndex(ID);
                         int column_TASK_Index = cur.getColumnIndex(TASK);
                         int column_STATUS_Index = cur.getColumnIndex(STATUS);
+                        int coloum_Priority_Index= cur.getColumnIndex(PRIORITY);
 
                         if (column_ID_Index != -1) {
                             task.setId(cur.getInt(column_ID_Index));
@@ -76,6 +83,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
                         if (column_STATUS_Index != -1) {
                             task.setStatus(cur.getInt(column_STATUS_Index));
+                        }
+
+                        if (coloum_Priority_Index != -1) {
+                            task.setPriority(cur.getString(coloum_Priority_Index));
                         }
 
                         taskList.add(task); // Add the task to the list
@@ -92,9 +103,66 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return taskList;
     }
 
+    public List<ToDoModel> getTasksByPriority(String priority) {
+        List<ToDoModel> taskList = new ArrayList<>();
+        Cursor cur = null;
+
+        try {
+            Log.d("DatabaseHandler", "Querying tasks for priority: " + priority);
+
+            String selection = PRIORITY + "=?";
+            String[] selectionArgs = {priority};
+
+            cur = db.query(TODO_TABLE, null, selection, selectionArgs, null, null, null);
+
+            if(cur != null){
+
+             if (cur.moveToFirst()) {
+                do {
+                    ToDoModel task = new ToDoModel();
+                    int column_ID_Index = cur.getColumnIndex(ID);
+                    int column_TASK_Index = cur.getColumnIndex(TASK);
+                    int column_STATUS_Index = cur.getColumnIndex(STATUS);
+                    int coloum_Priority_Index = cur.getColumnIndex(PRIORITY);
+
+                    if (column_ID_Index != -1) {
+                        task.setId(cur.getInt(column_ID_Index));
+                    }
+
+                    if (column_TASK_Index != -1) {
+                        task.setTask(cur.getString(column_TASK_Index));
+                    }
+
+                    if (column_STATUS_Index != -1) {
+                        task.setStatus(cur.getInt(column_STATUS_Index));
+                    }
+                    if (coloum_Priority_Index != -1) {
+                        task.setPriority(cur.getString(coloum_Priority_Index));
+                    } else {
+                        task.setPriority("DefaultPriority");
+                    }
+                    taskList.add(task);
+
+                } while (cur.moveToNext());
+            }}
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        return taskList;
+    }
+
+
     public void updateStatus(int id, int status){
         ContentValues cv = new ContentValues();
         cv.put(STATUS, status);
+        db.update(TODO_TABLE, cv, ID + "= ?", new String[] {String.valueOf(id)});
+    }
+
+    public void updatePriority(int id, String Priority){
+        ContentValues cv = new ContentValues();
+        cv.put(PRIORITY, Priority);
         db.update(TODO_TABLE, cv, ID + "= ?", new String[] {String.valueOf(id)});
     }
 

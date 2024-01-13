@@ -19,11 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-
-import kotlin.collections.ArrayDeque;
-
-public class MainActivity extends AppCompatActivity implements DialogCloseListener{
+public class ThirdActivity extends AppCompatActivity implements DialogCloseListener{
 
     private RecyclerView taskRecyclerView;
     private ToDoAdapter taskAdapter;
@@ -31,12 +27,10 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
     private List<ToDoModel>taskList;
     private DatabaseHandler db;
     private Button buttonToSecond;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_third);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -47,17 +41,17 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
         taskList=new ArrayList<>();
 
-        taskRecyclerView=findViewById(R.id.tasksRecyclerView);
+        taskRecyclerView=findViewById(R.id.tasksRecyclerViewThird);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         taskAdapter =new ToDoAdapter(db,this);
         taskRecyclerView.setAdapter(taskAdapter);
 
-        fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fabThird);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
         itemTouchHelper.attachToRecyclerView(taskRecyclerView);
 
-        taskList = db.getTasksByPriority("High");
+        taskList = db.getTasksByPriority("Low");
         Collections.reverse(taskList);
 
         taskAdapter.setTasks(taskList);
@@ -73,15 +67,17 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         buttonToSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this ,SecondActivity.class);
+                Intent intent = new Intent(ThirdActivity.this ,SecondActivity.class);
                 startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
             }
         });
     }
 
     @Override
     public void handleDialogClose(DialogInterface dialog) {
-        taskList = db.getTasksByPriority("High");
+        taskList = db.getTasksByPriority("Low");
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
         taskAdapter.notifyDataSetChanged();

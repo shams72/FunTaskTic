@@ -4,8 +4,17 @@ public class ToDoModel {
     private int id,status;
     private String task;
 
+    private String Priority;
+
     public int getId() {
         return id;
+    }
+
+    public void setPriority(String Priority) {
+        this.Priority = Priority;
+    }
+    public String getPriority() {
+        return Priority;
     }
 
     public void setId(int id) {

@@ -21,6 +21,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Calendar;
 import android.content.DialogInterface;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 
 public class AddNewTask extends BottomSheetDialogFragment {
@@ -30,6 +32,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private Calendar date;
     private Button newTaskSaveButton;
     private DatabaseHandler db;
+    private RadioButton highRadioButton, mediumRadioButton, lowRadioButton;
+    private String selectedPriority = "Medium";
 
     public static AddNewTask newInstance() {
         return new AddNewTask();
@@ -46,6 +50,31 @@ public class AddNewTask extends BottomSheetDialogFragment {
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_task, container, false);
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        newTaskText = view.findViewById(R.id.newTaskText);
+        newTaskSaveButton = view.findViewById(R.id.newTaskButton);
+        highRadioButton = view.findViewById(R.id.HighPriority);
+        mediumRadioButton = view.findViewById(R.id.MediumPriority);
+        lowRadioButton = view.findViewById(R.id.LowPriority);
+
+        RadioGroup radioGroup = view.findViewById(R.id.PriorityGroup);
+
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Handle radio button selection
+                if (checkedId == R.id.HighPriority) {
+                    selectedPriority = "High";
+                } else if (checkedId == R.id.MediumPriority) {
+                    selectedPriority = "Medium";
+                } else if (checkedId == R.id.LowPriority) {
+                    selectedPriority = "Low";
+                }
+            }
+        });
+
+
         return view;
     }
 
@@ -101,12 +130,18 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
 
         newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
 
 
                 String text ="";
                 String updated_text="";
+
+
+
+
 
                 if (newTaskText != null) {
 
@@ -127,7 +162,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         int month = date.get(Calendar.MONTH) + 1; // Calendar months are zero-based
                         int day = date.get(Calendar.DAY_OF_MONTH);
 
-                        text += "To Be Done By:-" + " " + year + "-" + month + "-" + day;
+                        text += "Deadline:-" + " " + year + "-" + month + "-" + day;
                     }else{
                         text += "Date Not Selected";
                     }
@@ -153,10 +188,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         ToDoModel task = new ToDoModel();
                         task.setTask(text);
                         task.setStatus(0);
+                        task.setPriority(selectedPriority);
                         db.insertTask(task);
-
-
-
                     }
                     dismiss();
                 }
