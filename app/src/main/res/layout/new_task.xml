@@ -24,14 +24,46 @@
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="332dp"
-        android:layout_height="449dp"
+        android:layout_width="349dp"
+        android:layout_height="314dp"
         android:layout_below="@+id/newTaskText"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="48dp" />
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="169dp"
+        android:layout_marginEnd="44dp" />
+
+    <RadioGroup
+        android:id="@+id/PriorityGroup"
+        android:layout_width="189dp"
+        android:layout_height="158dp"
+        android:layout_below="@+id/newTaskText"
+        android:layout_alignStart="@+id/newTaskButton"
+        android:layout_alignBottom="@+id/calendarView"
+        android:layout_marginStart="-272dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="83dp"
+        android:layout_marginBottom="285dp"
+        android:layout_toStartOf="@+id/newTaskButton">
+
+        <RadioButton
+            android:id="@+id/HighPriority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HighPriority" />
+
+        <RadioButton
+            android:id="@+id/MediumPriority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MediumPriority" />
+
+        <RadioButton
+            android:id="@+id/LowPriority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LowPriority" />
+    </RadioGroup>
 
 </RelativeLayout>
 

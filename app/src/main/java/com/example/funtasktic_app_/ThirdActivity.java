@@ -51,7 +51,7 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
         itemTouchHelper.attachToRecyclerView(taskRecyclerView);
 
-        taskList = db.getAllTasks();
+        taskList = db.getTasksByPriority("Low");
         Collections.reverse(taskList);
 
         taskAdapter.setTasks(taskList);
@@ -77,7 +77,7 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
 
     @Override
     public void handleDialogClose(DialogInterface dialog) {
-        taskList = db.getAllTasks();
+        taskList = db.getTasksByPriority("Low");
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
         taskAdapter.notifyDataSetChanged();

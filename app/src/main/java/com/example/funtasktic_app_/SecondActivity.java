@@ -55,7 +55,7 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
         itemTouchHelper.attachToRecyclerView(taskRecyclerView);
 
-        taskList = db.getAllTasks();
+        taskList = db.getTasksByPriority("Medium");
         Collections.reverse(taskList);
 
         taskAdapter.setTasks(taskList);
@@ -90,7 +90,7 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
 
     @Override
     public void handleDialogClose(DialogInterface dialog) {
-        taskList = db.getAllTasks();
+        taskList = db.getTasksByPriority("Medium");
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
         taskAdapter.notifyDataSetChanged();
