@@ -3,9 +3,16 @@ package com.example.funtasktic_app_.Model;
 public class ToDoModel {
     private int id,status;
     private String task;
+    private String deadline;
 
     private String Priority;
-
+    private String Date;
+    public String getDate() {
+        return Date;
+    }
+    public void setDate(String Date) {
+        this.Date = Date;
+    }
     public int getId() {
         return id;
     }
@@ -20,6 +27,15 @@ public class ToDoModel {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
 
     public int getStatus() {
         return status;

@@ -15,18 +15,21 @@ import java.util.List;
 public class DatabaseHandler extends SQLiteOpenHelper {
 
 
-    private static final int VERSION= 1;
+    private static final int VERSION= 2;
     private static final String Name="toDoListDatabase";
     private static final String TODO_TABLE="toDo";
     private static final String ID="id";
     private static final String TASK="task";
     private static final String STATUS="status";
     private static final String PRIORITY="PRIORITY";
+    private static final String DATE="DATE";
     private static final String CREATE_TO_DO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TASK + " TEXT, " +
             STATUS + " INTEGER, " +
-            PRIORITY + " TEXT) ";
+            PRIORITY + " TEXT, " +
+            DATE + " TEXT) ";
+
 
     private SQLiteDatabase db;
 
@@ -54,6 +57,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cv.put(TASK,task.getTask());
         cv.put(STATUS,0);
         cv.put(PRIORITY,task.getPriority());
+        cv.put(DATE,task.getDate());
         db.insert(TODO_TABLE,null,cv);
     }
 
@@ -72,6 +76,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         int column_TASK_Index = cur.getColumnIndex(TASK);
                         int column_STATUS_Index = cur.getColumnIndex(STATUS);
                         int coloum_Priority_Index= cur.getColumnIndex(PRIORITY);
+                        int coloum_Date_Index= cur.getColumnIndex(DATE);
 
                         if (column_ID_Index != -1) {
                             task.setId(cur.getInt(column_ID_Index));
@@ -87,6 +92,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
                         if (coloum_Priority_Index != -1) {
                             task.setPriority(cur.getString(coloum_Priority_Index));
+                        }
+
+                        if (column_ID_Index != -1) {
+                            task.setDate(cur.getString(coloum_Date_Index));
                         }
 
                         taskList.add(task); // Add the task to the list
@@ -124,6 +133,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     int column_TASK_Index = cur.getColumnIndex(TASK);
                     int column_STATUS_Index = cur.getColumnIndex(STATUS);
                     int coloum_Priority_Index = cur.getColumnIndex(PRIORITY);
+                    int coloum_Date_Index= cur.getColumnIndex(DATE);
 
                     if (column_ID_Index != -1) {
                         task.setId(cur.getInt(column_ID_Index));
@@ -141,6 +151,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     } else {
                         task.setPriority("DefaultPriority");
                     }
+                    if (column_ID_Index != -1) {
+                        task.setDate(cur.getString(coloum_Date_Index));
+                    }
                     taskList.add(task);
 
                 } while (cur.moveToNext());
@@ -157,6 +170,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void updateStatus(int id, int status){
         ContentValues cv = new ContentValues();
         cv.put(STATUS, status);
+        db.update(TODO_TABLE, cv, ID + "= ?", new String[] {String.valueOf(id)});
+    }
+
+    public void updateDate(int id, String Date){
+        ContentValues cv = new ContentValues();
+        cv.put(DATE, Date);
         db.update(TODO_TABLE, cv, ID + "= ?", new String[] {String.valueOf(id)});
     }
 

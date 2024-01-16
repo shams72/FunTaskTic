@@ -19,6 +19,8 @@ import com.example.funtasktic_app_.Model.ToDoModel;
 import com.example.funtasktic_app_.R;
 import com.example.funtasktic_app_.Utils.DatabaseHandler;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +47,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         db.openDataBase();
         final ToDoModel item = toDoList.get(position);
         holder.task.setText(item.getTask());
+        holder.date.setText(item.getDate());
         holder.task.setChecked(toBoolean(item.getStatus()));
 
         holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -91,6 +94,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         bundle.putInt("id", item.getId());
         bundle.putString("task", item.getTask());
         bundle.putString("PRIORITY",item.getPriority());
+        bundle.putString("DATE", item.getDate());
 
         FragmentActivity fragmentActivity = (FragmentActivity) activity;
 
@@ -101,10 +105,11 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CheckBox task;
-
+        TextView date;
         public ViewHolder(View view) {
             super(view);
             task = view.findViewById(R.id.todoCheckBox);
+            date=view.findViewById(R.id.todoDate);
         }
     }
 }
