@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bac_img">
+
+    <EditText
+        android:id="@+id/usernameET"
+        android:layout_width="283dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/white"
+        android:ems="10"
+        android:hint="Username eingeben"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/passwordET1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.974" />
+
+    <EditText
+        android:id="@+id/passwordET1"
+        android:layout_width="283dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="280dp"
+        android:background="@android:color/white"
+        android:ems="10"
+        android:hint="Password eingeben"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/passwordET2"
+        android:layout_width="283dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/white"
+        android:ems="10"
+        android:hint="Password wiederholen"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/confirmation_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordET1"
+        app:layout_constraintVertical_bias="0.301" />
+
+    <Button
+        android:id="@+id/confirmation_btn"
+        android:layout_width="125dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="120dp"
+        android:text="Bestätigen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
