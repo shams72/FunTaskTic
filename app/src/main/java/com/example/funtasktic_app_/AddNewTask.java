@@ -30,10 +30,11 @@ public class AddNewTask extends BottomSheetDialogFragment {
     public static final String TAG = "ActionBottomDialog";
     private EditText newTaskText;
     private Calendar date;
+    private EditText newDateText;
     private Button newTaskSaveButton;
     private DatabaseHandler db;
     private RadioButton highRadioButton, mediumRadioButton, lowRadioButton;
-    private String selectedPriority = "Medium";
+    private String selectedPriority = "";
 
     public static AddNewTask newInstance() {
         return new AddNewTask();
@@ -138,6 +139,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
                 String text ="";
                 String updated_text="";
+                String Date="";
+                String NewDate="";
 
 
 
@@ -146,13 +149,9 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 if (newTaskText != null) {
 
                     if(newTaskText.getText().toString() == " "){
-                        text += "Please Add a Text" + "\n" +
-                                "----------------------------------------------------------------------" + "\n";
-
-
+                        text += "Please Add a Text" + "\n";
                     }else {
-                        text +=  newTaskText.getText().toString() + "\n" +
-                                "----------------------------------------------------------------------" + "\n";
+                        text +=  newTaskText.getText().toString() + "\n";
                     }
 
 
@@ -162,9 +161,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         int month = date.get(Calendar.MONTH) + 1; // Calendar months are zero-based
                         int day = date.get(Calendar.DAY_OF_MONTH);
 
-                        text += "Deadline:-" + " " + year + "-" + month + "-" + day;
-                    }else{
-                        text += "Date Not Selected";
+                        Date = year + "-" + month + "-" + day;
                     }
 
                     if (finalIsUpdate) {
@@ -175,21 +172,23 @@ public class AddNewTask extends BottomSheetDialogFragment {
                             int year = date.get(Calendar.YEAR);
                             int month = date.get(Calendar.MONTH) + 1; // Calendar months are zero-based
                             int day = date.get(Calendar.DAY_OF_MONTH);
-
-                            updated_text += "----------------------------------------------------------------------" + "\n"
-                                + "To Be Done By:-" + " " + year + "-" + month + "-" + day;
-                        }else{
-                            updated_text += "";
+                            NewDate = " " + year + "-" + month + "-" + day;
                         }
 
 
                         db.updateTask(bundle.getInt("id"), updated_text);
+                        if(selectedPriority!=""){
                         db.updatePriority(bundle.getInt("id"),selectedPriority);
+                        }
+                        if(NewDate!=""){
+                        db.updateDate(bundle.getInt("id"),NewDate);
+                        }
                     } else {
                         ToDoModel task = new ToDoModel();
                         task.setTask(text);
                         task.setStatus(0);
                         task.setPriority(selectedPriority);
+                        task.setDate(Date);
                         db.insertTask(task);
                     }
                     dismiss();

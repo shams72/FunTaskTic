@@ -5,7 +5,13 @@ public class ToDoModel {
     private String task;
 
     private String Priority;
-
+    private String Date;
+    public String getDate() {
+        return Date;
+    }
+    public void setDate(String Date) {
+        this.Date = Date;
+    }
     public int getId() {
         return id;
     }
