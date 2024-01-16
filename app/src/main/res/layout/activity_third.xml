@@ -21,12 +21,12 @@
         android:id="@+id/buttonToSecond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@+id/tasksTextThird"
         android:layout_alignTop="@+id/tasksTextThird"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="-32dp"
+        android:layout_marginTop="0dp"
         android:background="@android:color/transparent"
-        android:drawableRight="@drawable/baseline_keyboard_arrow_left"
-        android:layout_marginStart="8dp"/>
+        android:drawableRight="@drawable/baseline_keyboard_arrow_left" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasksRecyclerViewThird"
