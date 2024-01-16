@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
     private DatabaseHandler db;
     private Button buttonToSecond;
 
+    private  Button  buttonHelp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         });
 
         buttonToSecond = findViewById(R.id.buttonToSecond);
+        buttonHelp = findViewById(R.id.help_b);
         buttonToSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +80,16 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
                 startActivity(intent);
             }
         });
+
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, helppage.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override

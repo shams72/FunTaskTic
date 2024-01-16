@@ -147,12 +147,12 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
                     if(newTaskText.getText().toString() == " "){
                         text += "Please Add a Text" + "\n" +
-                                "------------------------------------------------------------------------" + "\n";
+                                "----------------------------------------------------------------------" + "\n";
 
 
                     }else {
                         text +=  newTaskText.getText().toString() + "\n" +
-                                "------------------------------------------------------------------------" + "\n";
+                                "----------------------------------------------------------------------" + "\n";
                     }
 
 
@@ -176,7 +176,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                             int month = date.get(Calendar.MONTH) + 1; // Calendar months are zero-based
                             int day = date.get(Calendar.DAY_OF_MONTH);
 
-                            updated_text += "------------------------------------------------------------------------" + "\n"
+                            updated_text += "----------------------------------------------------------------------" + "\n"
                                 + "To Be Done By:-" + " " + year + "-" + month + "-" + day;
                         }else{
                             updated_text += "";
