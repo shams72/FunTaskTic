@@ -34,7 +34,7 @@ public class helppage extends AppCompatActivity {
         videoView = findViewById(R.id.videoView);
 
 
-        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.help;
+        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.videohelp;
         Uri uri = Uri.parse(videoPath);
         videoView.setVideoURI(uri);
 
