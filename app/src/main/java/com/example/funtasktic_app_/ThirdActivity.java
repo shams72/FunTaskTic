@@ -28,6 +28,7 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
     private List<ToDoModel>taskList;
     private DatabaseHandler db;
     private Button buttonToSecond;
+    private String username;
 
     private Button abmelden;
 
