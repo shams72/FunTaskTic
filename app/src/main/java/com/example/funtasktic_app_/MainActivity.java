@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
     private DatabaseHandler db;
     private Button buttonToSecond;
 
-    private Switch abmeldenswitch;
+
     String username;
 
     String Shams;
@@ -91,19 +91,6 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
-                startActivity(intent);
-            }
-        });
-
-        abmeldenswitch = findViewById(R.id.abmeldenSwitch);
-
-
-
-        abmeldenswitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginPage.class);
-
                 startActivity(intent);
             }
         });
