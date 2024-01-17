@@ -63,18 +63,24 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
 
         fab = findViewById(R.id.fabThird);
 
+        Intent intent = getIntent();
+        username = intent.getStringExtra("USERNAME_EXTRA");
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
         itemTouchHelper.attachToRecyclerView(taskRecyclerView);
 
-        taskList = db.getTasksByPriority("Low");
+        taskList = db.getTasksByPriority("Low",username);
         Collections.reverse(taskList);
 
         taskAdapter.setTasks(taskList);
 
+
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+                AddNewTask.newInstance(username).show(getSupportFragmentManager(), AddNewTask.TAG);
             }
         });
 
@@ -83,8 +89,8 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ThirdActivity.this ,SecondActivity.class);
+                intent.putExtra("USERNAME_EXTRA", username);
                 startActivity(intent);
-
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
             }
         });
@@ -92,7 +98,7 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
 
     @Override
     public void handleDialogClose(DialogInterface dialog) {
-        taskList = db.getTasksByPriority("Low");
+        taskList = db.getTasksByPriority("Low",username);
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
         taskAdapter.notifyDataSetChanged();

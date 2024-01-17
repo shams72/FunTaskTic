@@ -3,7 +3,9 @@ package com.example.funtasktic_app_.Model;
 public class ToDoModel {
     private int id,status;
     private String task;
-    private String deadline;
+    private String Username;
+
+
 
     private String Priority;
     private String Date;
@@ -28,12 +30,12 @@ public class ToDoModel {
         this.id = id;
     }
 
-    public String getDeadline() {
-        return deadline;
+    public String getUsername() {
+        return Username;
     }
 
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
+    public void setUserName(String username) {
+        this.Username = username;
     }
 
 

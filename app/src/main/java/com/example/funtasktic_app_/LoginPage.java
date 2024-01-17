@@ -18,6 +18,7 @@ public class LoginPage extends AppCompatActivity {
 
     private Button loginButtonsecond;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,7 @@ public class LoginPage extends AppCompatActivity {
                         String message = "Hallo " + username + "!";
                         Toast.makeText(LoginPage.this, message, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginPage.this ,MainActivity.class);
+                        intent.putExtra("USERNAME_EXTRA", username);
                         startActivity(intent);
                     }
                     else {

@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
     private List<ToDoModel>taskList;
     private DatabaseHandler db;
     private Button buttonToSecond;
+    String username;
+
+    String Shams;
 
     private  Button  buttonHelp;
 
@@ -59,24 +62,32 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
         itemTouchHelper.attachToRecyclerView(taskRecyclerView);
 
-        taskList = db.getTasksByPriority("High");
-        Collections.reverse(taskList);
+        Intent intent = getIntent();
+        username = intent.getStringExtra("USERNAME_EXTRA");
+        taskList = db.getTasksByPriority("High",username);
 
+        Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
+
+        Intent user = getIntent();
+        Shams = user.getStringExtra("USERNAME");
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+                AddNewTask.newInstance(username).show(getSupportFragmentManager(), AddNewTask.TAG);
             }
         });
+
 
         buttonToSecond = findViewById(R.id.buttonToSecond);
         buttonHelp = findViewById(R.id.help_b);
         buttonToSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this ,SecondActivity.class);
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra("USERNAME_EXTRA", username);
                 startActivity(intent);
             }
         });
@@ -94,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
     @Override
     public void handleDialogClose(DialogInterface dialog) {
-        taskList = db.getTasksByPriority("High");
+        taskList = db.getTasksByPriority("High",username);
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
         taskAdapter.notifyDataSetChanged();

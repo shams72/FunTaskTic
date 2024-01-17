@@ -36,8 +36,25 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private RadioButton highRadioButton, mediumRadioButton, lowRadioButton;
     private String selectedPriority = "";
 
-    public static AddNewTask newInstance() {
-        return new AddNewTask();
+    private String Username;
+
+    public AddNewTask(String username) {
+        this.Username = username;
+    }
+
+    public AddNewTask() {}
+
+
+
+    public static AddNewTask newInstance(String username) {
+        AddNewTask fragment = new AddNewTask();
+        fragment.setUsername(username);
+        return fragment;
+    }
+
+    // Setter method for Username
+    public void setUsername(String username) {
+        this.Username = username;
     }
 
     @Override
@@ -81,6 +98,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
     @Override
     public void onViewCreated( View view, Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
         newTaskText = (getView().findViewById(R.id.newTaskText));
         newTaskSaveButton = getView().findViewById(R.id.newTaskButton);
@@ -98,6 +116,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 newTaskSaveButton.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
             }
         }
+
+
 
         db = new DatabaseHandler(getActivity());
         db.openDataBase();
@@ -143,15 +163,12 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 String NewDate="";
 
 
-
-
-
                 if (newTaskText != null) {
 
                     if(newTaskText.getText().toString() == " "){
-                        text += "Please Add a Text" + "\n";
+                        text += "Please Add a Text";
                     }else {
-                        text +=  newTaskText.getText().toString() + "\n";
+                        text +=  newTaskText.getText().toString();
                     }
 
 
@@ -189,6 +206,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         task.setStatus(0);
                         task.setPriority(selectedPriority);
                         task.setDate(Date);
+                        task.setUserName(Username);
                         db.insertTask(task);
                     }
                     dismiss();

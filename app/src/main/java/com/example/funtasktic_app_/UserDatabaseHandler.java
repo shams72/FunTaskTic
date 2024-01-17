@@ -48,4 +48,5 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
         cursor.close();
         return exists;
     }
+
 }
