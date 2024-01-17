@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.funtasktic_app_.Adapter.ToDoAdapter;
 import com.example.funtasktic_app_.Model.ToDoModel;
@@ -28,11 +29,23 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
     private DatabaseHandler db;
     private Button buttonToSecond;
 
-    private String username;
+    private Button abmelden;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
+        abmelden = findViewById(R.id.abmeldenbtn);
+        abmelden.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ThirdActivity.this, "Abmeldung erfolgreich! ", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(ThirdActivity.this, LoginPage.class);
+                startActivity(intent);
+            }
+
+        });
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();

@@ -19,6 +19,10 @@ public class RegestrierenPage extends AppCompatActivity {
     private EditText passwordTwoEditText;
     private Button confirmationButton;
 
+    private Button backButton;
+
+
+
     private UserDatabaseHandler db;
 
     @Override
@@ -32,6 +36,17 @@ public class RegestrierenPage extends AppCompatActivity {
         passwordOneEditText = findViewById(R.id.passwordET1);
         passwordTwoEditText = findViewById(R.id.passwordET2);
         confirmationButton = findViewById(R.id.confirmation_btn);
+        backButton = findViewById(R.id.back_Button_);
+
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(RegestrierenPage.this ,LoginPage.class);
+                startActivity(intent);
+            }
+        });
 
         confirmationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +59,12 @@ public class RegestrierenPage extends AppCompatActivity {
                    Toast.makeText(RegestrierenPage.this, "Bitte füllen Sie alle Felder aus.", Toast.LENGTH_SHORT).show();
                 } else if (!passwordOne.equals(passwordTwo)) {
                     Toast.makeText(RegestrierenPage.this, "Die Passwörter stimmen nicht überein.", Toast.LENGTH_SHORT).show();
-                } else if(passwordOne.equals(passwordTwo) && (!username.isEmpty())) {
+                }
+                else if(db.checkUserExists(username, passwordOne)){
+                    Toast.makeText(RegestrierenPage.this, "Es existiert bereits ein Konto mit diesen Daten.", Toast.LENGTH_SHORT).show();
+
+                }
+                else if(passwordOne.equals(passwordTwo) && (!username.isEmpty())) {
                     boolean check_add = db.addUser(username,passwordOne);
                     if(check_add) {
                         Toast.makeText(RegestrierenPage.this, "Regestrierung erfolgreich!.", Toast.LENGTH_SHORT).show();
