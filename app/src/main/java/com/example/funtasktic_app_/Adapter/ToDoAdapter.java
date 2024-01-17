@@ -95,10 +95,10 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         bundle.putString("task", item.getTask());
         bundle.putString("PRIORITY",item.getPriority());
         bundle.putString("DATE", item.getDate());
+        bundle.putString("USERNAME", item.getUsername());
 
         FragmentActivity fragmentActivity = (FragmentActivity) activity;
-
-        AddNewTask fragment = new AddNewTask();
+        AddNewTask fragment = new AddNewTask(item.getUsername());
         fragment.setArguments(bundle);
         fragment.show(fragmentActivity.getSupportFragmentManager(), AddNewTask.TAG);
     }

@@ -17,6 +17,7 @@ public class LoginPage extends AppCompatActivity {
 
     private Button loginButtonsecond;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,9 @@ public class LoginPage extends AppCompatActivity {
                     if(check_user){
 
                         Toast.makeText(LoginPage.this, "Anmeldung erfolgreich!.", Toast.LENGTH_SHORT).show();
+                        AddNewTask newTask=new AddNewTask(username);
                         Intent intent = new Intent(LoginPage.this ,MainActivity.class);
+                        intent.putExtra("USERNAME_EXTRA", username);
                         startActivity(intent);
                     }
                     else {

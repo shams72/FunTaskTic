@@ -23,11 +23,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String STATUS="status";
     private static final String PRIORITY="PRIORITY";
     private static final String DATE="DATE";
+
+    private static final String USERNAME="USERNAME";
+
     private static final String CREATE_TO_DO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TASK + " TEXT, " +
             STATUS + " INTEGER, " +
             PRIORITY + " TEXT, " +
+            USERNAME + " TEXT, " +
             DATE + " TEXT) ";
 
 
@@ -58,6 +62,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cv.put(STATUS,0);
         cv.put(PRIORITY,task.getPriority());
         cv.put(DATE,task.getDate());
+        cv.put(USERNAME,task.getUsername());
         db.insert(TODO_TABLE,null,cv);
     }
 
@@ -77,6 +82,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         int column_STATUS_Index = cur.getColumnIndex(STATUS);
                         int coloum_Priority_Index= cur.getColumnIndex(PRIORITY);
                         int coloum_Date_Index= cur.getColumnIndex(DATE);
+                        int coloum_Username_Index=cur.getColumnIndex(USERNAME);
 
                         if (column_ID_Index != -1) {
                             task.setId(cur.getInt(column_ID_Index));
@@ -97,6 +103,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         if (column_ID_Index != -1) {
                             task.setDate(cur.getString(coloum_Date_Index));
                         }
+                        if (coloum_Username_Index != -1) {
+                            task.setUserName(cur.getString(coloum_Username_Index));
+                        }
 
                         taskList.add(task); // Add the task to the list
 
@@ -112,20 +121,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return taskList;
     }
 
-    public List<ToDoModel> getTasksByPriority(String priority) {
+    public List<ToDoModel> getTasksByPriority(String priority,String username) {
         List<ToDoModel> taskList = new ArrayList<>();
         Cursor cur = null;
 
         try {
             Log.d("DatabaseHandler", "Querying tasks for priority: " + priority);
 
-            String selection = PRIORITY + "=?";
-            String[] selectionArgs = {priority};
+            String selection = PRIORITY + "=? AND " + USERNAME + "=?";
+            String[] selectionArgs = {priority, username};
+
 
             cur = db.query(TODO_TABLE, null, selection, selectionArgs, null, null, null);
 
             if(cur != null){
-
              if (cur.moveToFirst()) {
                 do {
                     ToDoModel task = new ToDoModel();
@@ -134,6 +143,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     int column_STATUS_Index = cur.getColumnIndex(STATUS);
                     int coloum_Priority_Index = cur.getColumnIndex(PRIORITY);
                     int coloum_Date_Index= cur.getColumnIndex(DATE);
+                    int coloum_Username_Index=cur.getColumnIndex(USERNAME);
 
                     if (column_ID_Index != -1) {
                         task.setId(cur.getInt(column_ID_Index));
@@ -153,6 +163,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     }
                     if (column_ID_Index != -1) {
                         task.setDate(cur.getString(coloum_Date_Index));
+                    }
+                    if (coloum_Username_Index != -1) {
+                        task.setUserName(cur.getString(coloum_Username_Index));
                     }
                     taskList.add(task);
 
@@ -190,6 +203,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cv.put(TASK, task);
         db.update(TODO_TABLE, cv, ID + "= ?", new String[] {String.valueOf(id)});
     }
+
 
     public void deleteTask(int id){
         db.delete(TODO_TABLE, ID + "= ?", new String[] {String.valueOf(id)});

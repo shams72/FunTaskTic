@@ -34,6 +34,8 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
     private Button buttonToMain;
     private Button buttonToThird;
 
+    private String username;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,32 +56,39 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
         taskAdapter =new ToDoAdapter(db,this);
         taskRecyclerView.setAdapter(taskAdapter);
 
+        Intent intent = getIntent();
+        username = intent.getStringExtra("USERNAME_EXTRA");
+
         fab = findViewById(R.id.fabSecond);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
         itemTouchHelper.attachToRecyclerView(taskRecyclerView);
 
-        taskList = db.getTasksByPriority("Medium");
+        taskList = db.getTasksByPriority("Medium",username);
         Collections.reverse(taskList);
 
         taskAdapter.setTasks(taskList);
 
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+                AddNewTask.newInstance(username).show(getSupportFragmentManager(), AddNewTask.TAG);
             }
         });
 
         buttonToMain = findViewById(R.id.buttonToMain);
         buttonToMain.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SecondActivity.this ,MainActivity.class);
-                startActivity(intent);
 
-                overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-            }
+                public void onClick(View v) {
+                    Intent intent = new Intent(SecondActivity.this, MainActivity.class);
+                    intent.putExtra("USERNAME_EXTRA", username);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+                }
+
         });
 
         buttonToThird = findViewById(R.id.buttonToThird);
@@ -87,6 +96,7 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SecondActivity.this ,ThirdActivity.class);
+                intent.putExtra("USERNAME_EXTRA", username);
                 startActivity(intent);
             }
         });
@@ -94,7 +104,7 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
 
     @Override
     public void handleDialogClose(DialogInterface dialog) {
-        taskList = db.getTasksByPriority("Medium");
+        taskList = db.getTasksByPriority("Medium",username);
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
         taskAdapter.notifyDataSetChanged();
