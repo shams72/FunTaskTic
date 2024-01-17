@@ -12,6 +12,7 @@ public class LoginPage extends AppCompatActivity {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
+
     private Button loginButton;
     private UserDatabaseHandler db;
 
@@ -39,7 +40,8 @@ public class LoginPage extends AppCompatActivity {
                     boolean check_user=  db.checkUserExists(username, password);
                     if(check_user){
 
-                        Toast.makeText(LoginPage.this, "Anmeldung erfolgreich!.", Toast.LENGTH_SHORT).show();
+                        String message = "Hallo " + username + "!";
+                        Toast.makeText(LoginPage.this, message, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginPage.this ,MainActivity.class);
                         startActivity(intent);
                     }

@@ -46,4 +46,18 @@
         android:backgroundTint="@android:color/holo_purple"
         android:src="@drawable/ic_baseline_add"/>
 
+    <Button
+        android:id="@+id/abmeldenbtn"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="648dp"
+        android:layout_marginEnd="259dp"
+        android:layout_marginBottom="26dp"
+        android:text="Abmelden" />
+
 </RelativeLayout>
