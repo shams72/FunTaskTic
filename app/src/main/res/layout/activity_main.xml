@@ -8,9 +8,10 @@
         android:id="@+id/tasksText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="85dp"
         android:layout_marginBottom="16dp"
         android:text="Hohe Priorität"
         android:textColor="@android:color/black"
@@ -23,8 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tasksText"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="8dp"
-        android:layout_toEndOf="@+id/tasksText"
         android:background="@android:color/transparent"
         android:drawableRight="@drawable/baseline_keyboard_arrow_right" />
 
@@ -65,6 +64,17 @@
     android:textColor="@color/white"
     android:textSize="35sp" />
 
+    <Switch
+        android:id="@+id/abmeldenSwitch"
+        android:layout_width="98dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="11dp"
+        android:layout_toStartOf="@+id/tasksText"
+        android:text="Abmelden" />
 
 
 </RelativeLayout>

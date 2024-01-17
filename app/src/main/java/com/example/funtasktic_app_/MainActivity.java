@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 
 import com.example.funtasktic_app_.Adapter.ToDoAdapter;
 import com.example.funtasktic_app_.Model.ToDoModel;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
     private List<ToDoModel>taskList;
     private DatabaseHandler db;
     private Button buttonToSecond;
+
+    private Switch abmeldenswitch;
     String username;
 
     String Shams;
@@ -91,6 +94,20 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
                 startActivity(intent);
             }
         });
+
+        abmeldenswitch = findViewById(R.id.abmeldenSwitch);
+
+
+
+        abmeldenswitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginPage.class);
+
+                startActivity(intent);
+            }
+        });
+
 
         buttonHelp.setOnClickListener(new View.OnClickListener() {
             @Override
