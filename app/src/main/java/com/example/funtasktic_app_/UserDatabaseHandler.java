@@ -8,10 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class UserDatabaseHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDatabase";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static final String TABLE_NAME = "users";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
+
+    private static final String COLUMN_ID = "ID";
+
 
     public UserDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -19,7 +22,10 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_USERNAME + " TEXT PRIMARY KEY, " + COLUMN_PASSWORD + " TEXT)";
+        String createTableStatement = "CREATE TABLE " + TABLE_NAME + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_USERNAME + " TEXT, " +
+                COLUMN_PASSWORD + " TEXT)";
         db.execSQL(createTableStatement);
     }
 
@@ -48,5 +54,25 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
         cursor.close();
         return exists;
     }
+
+    public int findId(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + COLUMN_ID + " FROM " + TABLE_NAME + " WHERE " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{username, password});
+
+        int userId = -1;
+
+        if (cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndex(COLUMN_ID);
+            if (columnIndex != -1) {
+                userId = cursor.getInt(columnIndex);
+            }
+        }
+
+        cursor.close();
+        return userId;
+    }
+
+
 
 }

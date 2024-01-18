@@ -34,14 +34,16 @@ public class LoginPage extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = usernameEditText.getText().toString();
+                String Username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
+                String username =Username+password;  //ID FOR EVERY USERS IN TASKS DATABANK
+
 
                 if (!username.isEmpty() && !password.isEmpty()) {
-                    boolean check_user=  db.checkUserExists(username, password);
-                    if(check_user){
+                    int find_user_id = db.findId(Username, password);
+                    if(find_user_id!=-1){
 
-                        String message = "Hallo " + username + "!";
+                        String message = "Hallo " + Username + "!";
                         Toast.makeText(LoginPage.this, message, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginPage.this ,MainActivity.class);
                         intent.putExtra("USERNAME_EXTRA", username);

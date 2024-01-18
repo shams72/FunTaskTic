@@ -24,8 +24,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String PRIORITY="PRIORITY";
     private static final String DATE="DATE";
 
-    private static final String USERNAME="USERNAME";
-
+    private static final String USERNAME="USERNAME";//USERNAME IS A COMBINATION
+                                                    // OF USERNAME AND PASSWORD
+                                                    // IN DATABANK
     private static final String CREATE_TO_DO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TASK + " TEXT, " +
