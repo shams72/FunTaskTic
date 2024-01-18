@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
     String username;
 
-    String Shams;
+    String Username2;
 
     private  Button  buttonHelp;
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         taskAdapter.setTasks(taskList);
 
         Intent user = getIntent();
-        Shams = user.getStringExtra("USERNAME");
+        Username2 = user.getStringExtra("USERNAME");
 
 
         fab.setOnClickListener(new View.OnClickListener() {

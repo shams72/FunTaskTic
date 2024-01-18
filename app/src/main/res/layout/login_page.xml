@@ -16,26 +16,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.132"
-        app:srcCompat="@drawable/hello" />
+        app:srcCompat="@drawable/hello"
+
+
+
+
+    />
 
     <EditText
         android:id="@+id/usernameEditText"
         android:layout_width="367dp"
         android:layout_height="41dp"
         android:layout_marginTop="84dp"
-        android:background="@android:color/white"
-        android:hint="Username"
+        android:hint=" Username"
+
+        android:background="@drawable/rounde_edges"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView" />
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+
+
+    />
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="367dp"
         android:layout_height="41dp"
         android:layout_marginTop="76dp"
-        android:background="@android:color/white"
-        android:hint="Password"
+
+        android:background="@drawable/rounde_edges"
+        android:hint=" Password"
         android:password="true"
         app:circularflow_radiusInDP="60dp"
         app:layout_constraintEnd_toEndOf="parent"
