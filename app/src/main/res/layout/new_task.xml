@@ -29,41 +29,43 @@
         android:layout_below="@+id/newTaskText"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="154dp"
-        android:layout_marginEnd="31dp" />
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="103dp"
+        android:layout_marginEnd="34dp" />
 
     <RadioGroup
         android:id="@+id/PriorityGroup"
-        android:layout_width="match_parent"
-        android:layout_height="67dp"
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
         android:layout_alignStart="@+id/calendarView"
         android:layout_alignBottom="@+id/newTaskButton"
-        android:layout_marginStart="-26dp"
-        android:layout_marginEnd="-121dp"
-        android:layout_marginBottom="-83dp"
+        android:layout_marginStart="-28dp"
+        android:layout_marginEnd="-116dp"
+        android:layout_marginBottom="-70dp"
         android:layout_toStartOf="@+id/newTaskButton"
         android:orientation="horizontal">
 
 
-
         <RadioButton
             android:id="@+id/HighPriority"
-            android:layout_width="128dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HighPriority" />
+            android:text="Hohe Priorität"
+            android:textSize="14sp" />
 
         <RadioButton
             android:id="@+id/MediumPriority"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MediumPriority" />
+            android:text="Mittlere Priorität"
+            android:textSize="14sp" />
 
         <RadioButton
             android:id="@+id/LowPriority"
-            android:layout_width="128dp"
+            android:layout_width="164dp"
             android:layout_height="wrap_content"
-            android:text="LowPriority" />
+            android:text="Niedrige Priorität"
+            android:textSize="14sp" />
     </RadioGroup>
 
 
