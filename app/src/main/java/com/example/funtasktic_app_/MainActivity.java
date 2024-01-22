@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_out_to_right, R.anim.slide_in_from_left);
             }
         });
 

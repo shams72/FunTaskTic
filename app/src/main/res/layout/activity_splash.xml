@@ -16,5 +16,5 @@
         android:layout_marginEnd="47dp"
         android:layout_marginBottom="83dp"
         android:background="@android:color/holo_blue_light"
-        android:src="@drawable/img" />
+        android:src="@drawable/img_removebg" />
 </RelativeLayout>

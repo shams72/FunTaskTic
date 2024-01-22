@@ -98,6 +98,7 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
                 Intent intent = new Intent(SecondActivity.this ,ThirdActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_out_to_right, R.anim.slide_in_from_left);
             }
         });
     }
