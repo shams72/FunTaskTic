@@ -75,15 +75,19 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
             @Override
             public void onClick(View v) {
 
-                db.deleteDoneTask(username);
+               /* db.deleteDoneTask(username);
+                taskAdapter.notifyDataSetChanged();*/
+
+                if(db.deleteDoneTask(username)>0){
                 taskAdapter.notifyDataSetChanged();
-                attempts++;
-                if(attempts>0){
-                    attempts=0;
                 Intent intent = new Intent(DoneActivity.this, DeleteAnimation.class);
                 intent.putExtra("USERNAME_EXTRA", username);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                }else{
+                    Toast.makeText(DoneActivity.this, "Es wurden keine Aufgaben gelöscht. ", Toast.LENGTH_SHORT).show();
+
+
                 }
             }
         });

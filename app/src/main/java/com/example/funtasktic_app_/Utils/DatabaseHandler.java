@@ -270,13 +270,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.delete(TODO_TABLE, ID + "= ?", new String[] {String.valueOf(id)});
     }
 
-    public void deleteDoneTask(String username) {
+    public int deleteDoneTask(String username) {
         synchronized (this) {
             String selection = STATUS + " = ? AND " + USERNAME + " = ?";
             String[] selectionArgs = { String.valueOf(1), username };
-            db.delete(TODO_TABLE, selection, selectionArgs);
+            int rows_deleted=db.delete(TODO_TABLE, selection, selectionArgs);
             notifyAll();
+            return rows_deleted;
         }
+
     }
 
 
