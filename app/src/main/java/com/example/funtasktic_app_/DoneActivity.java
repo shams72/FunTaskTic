@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.funtasktic_app_.Adapter.ToDoAdapter;
 import com.example.funtasktic_app_.Model.ToDoModel;
 import com.example.funtasktic_app_.Utils.DatabaseHandler;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +31,7 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
     private DatabaseHandler db;
     private RecyclerView taskRecyclerView;
     private Button buttonToMain;
+    private FloatingActionButton deleteChecked;
     String username;
     String Username2;
     @Override
@@ -63,6 +65,14 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
 
         Intent user = getIntent();
         Username2 = user.getStringExtra("USERNAME");
+
+        deleteChecked = findViewById(R.id.deleteChecked);
+        deleteChecked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         buttonToMain = findViewById(R.id.buttonToMainFromDone);
         buttonToMain.setOnClickListener(new View.OnClickListener() {
