@@ -5,47 +5,37 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tasksText"
+        android:id="@+id/tasksTextDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="85dp"
         android:layout_marginBottom="16dp"
-        android:text="Hohe Priorität"
+        android:text="Erledigt"
         android:textColor="@android:color/black"
         android:textSize="32sp"
         android:layout_centerHorizontal="true"
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/buttonToSecond"
+        android:id="@+id/buttonToMainFromDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tasksText"
+        android:layout_alignTop="@+id/tasksTextDone"
         android:layout_alignParentEnd="true"
         android:background="@android:color/transparent"
         android:drawableRight="@drawable/baseline_keyboard_arrow_right" />
 
-    <Button
-        android:id="@+id/buttonToDone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tasksText"
-        android:layout_alignParentStart="true"
-        android:background="@android:color/transparent"
-        android:drawableRight="@drawable/baseline_keyboard_arrow_left"
-        android:layout_marginStart="8dp"/>
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tasksRecyclerView"
+        android:id="@+id/tasksRecyclerViewDone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tasksText"
+        android:layout_below="@+id/tasksTextDone"
         android:nestedScrollingEnabled="true"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/deleteChecked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -54,11 +44,11 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:backgroundTint="@android:color/holo_purple"
-        android:src="@drawable/ic_baseline_add" />
+        android:backgroundTint="@color/delete_red"
+        android:src="@drawable/baseline_delete" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/menuMain"
+        android:id="@+id/menuDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -66,7 +56,7 @@
         android:layout_margin="32dp"
         android:backgroundTint="@android:color/holo_purple"
         android:src="@drawable/baseline_menu"
-        android:onClick="showPopupMain"/>
+        android:onClick="showPopupDone"/>
 
 
 </RelativeLayout>
