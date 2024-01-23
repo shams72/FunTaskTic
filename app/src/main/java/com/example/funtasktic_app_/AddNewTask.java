@@ -207,7 +207,9 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         task.setPriority(selectedPriority);
                         task.setDate(Date);
                         task.setUserName(Username);
+                        if(selectedPriority!=""){
                         db.insertTask(task);
+                        }
                     }
                     dismiss();
                 }

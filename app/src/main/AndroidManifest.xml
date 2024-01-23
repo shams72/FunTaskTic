@@ -13,6 +13,9 @@
         android:theme="@style/Theme.FunTaskTic_App_"
         tools:targetApi="31">
         <activity
+            android:name=".DeleteAnimation"
+            android:exported="false" />
+        <activity
             android:name=".DoneActivity"
             android:exported="false" />
         <activity

@@ -57,6 +57,66 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db=this.getWritableDatabase();
     }
 
+
+    public List<ToDoModel> getAllDoneTasks(String Username){
+        List<ToDoModel> taskList = new ArrayList<>();
+        Cursor cur = null;
+        db.beginTransaction();
+        try {
+
+            String selection = STATUS + "=? AND " + USERNAME + "=?";
+            String[] selectionArgs = {"1", Username};
+
+            cur = db.query(TODO_TABLE, null, selection, selectionArgs, null, null, null);
+            if (cur != null) {
+                if (cur.moveToFirst()) {
+                    do {
+                        ToDoModel task = new ToDoModel();
+                        int column_ID_Index = cur.getColumnIndex(ID);
+                        int column_TASK_Index = cur.getColumnIndex(TASK);
+                        int column_STATUS_Index = cur.getColumnIndex(STATUS);
+                        int coloum_Priority_Index= cur.getColumnIndex(PRIORITY);
+                        int coloum_Date_Index= cur.getColumnIndex(DATE);
+                        int coloum_Username_Index=cur.getColumnIndex(USERNAME);
+
+                        if (column_ID_Index != -1) {
+                            task.setId(cur.getInt(column_ID_Index));
+                        }
+
+                        if (column_TASK_Index != -1) {
+                            task.setTask(cur.getString(column_TASK_Index));
+                        }
+
+                        if (column_STATUS_Index != -1) {
+                            task.setStatus(cur.getInt(column_STATUS_Index));
+                        }
+
+                        if (coloum_Priority_Index != -1) {
+                            task.setPriority(cur.getString(coloum_Priority_Index));
+                        }
+
+                        if (column_ID_Index != -1) {
+                            task.setDate(cur.getString(coloum_Date_Index));
+                        }
+                        if (coloum_Username_Index != -1) {
+                            task.setUserName(cur.getString(coloum_Username_Index));
+                        }
+
+                        taskList.add(task); // Add the task to the list
+
+                    } while (cur.moveToNext());
+                }
+            }
+        } finally {
+            db.endTransaction();
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        return taskList;
+    }
+
+
     public void insertTask(ToDoModel task){
         ContentValues cv = new ContentValues();
         cv.put(TASK,task.getTask());
@@ -209,6 +269,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void deleteTask(int id){
         db.delete(TODO_TABLE, ID + "= ?", new String[] {String.valueOf(id)});
     }
+
+    public void deleteDoneTask(String username) {
+        synchronized (this) {
+            String selection = STATUS + " = ? AND " + USERNAME + " = ?";
+            String[] selectionArgs = { String.valueOf(1), username };
+            db.delete(TODO_TABLE, selection, selectionArgs);
+            notifyAll();
+        }
+    }
+
 
 
 

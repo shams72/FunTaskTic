@@ -34,6 +34,8 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
     private FloatingActionButton deleteChecked;
     String username;
     String Username2;
+
+    int attempts = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,19 +60,31 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
 
         Intent intent = getIntent();
         username = intent.getStringExtra("USERNAME_EXTRA");
-        taskList = db.getTasksByPriority("High",username);
 
+        taskList = db.getAllDoneTasks(username);
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
 
         Intent user = getIntent();
         Username2 = user.getStringExtra("USERNAME");
 
+
+
         deleteChecked = findViewById(R.id.deleteChecked);
         deleteChecked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                db.deleteDoneTask(username);
+                taskAdapter.notifyDataSetChanged();
+                attempts++;
+                if(attempts>0){
+                    attempts=0;
+                Intent intent = new Intent(DoneActivity.this, DeleteAnimation.class);
+                intent.putExtra("USERNAME_EXTRA", username);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                }
             }
         });
 
@@ -89,7 +103,7 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
 
     @Override
     public void handleDialogClose(DialogInterface dialog) {
-        taskList = db.getTasksByPriority("High",username);
+        taskList = db.getAllDoneTasks(username);
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
         taskAdapter.notifyDataSetChanged();
