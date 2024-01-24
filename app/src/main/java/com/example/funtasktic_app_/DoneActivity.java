@@ -52,10 +52,10 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
 
         taskRecyclerView=findViewById(R.id.tasksRecyclerViewDone);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        taskAdapter =new ToDoAdapter(db,this);
+        taskAdapter =new ToDoAdapter(db,this,1);
         taskRecyclerView.setAdapter(taskAdapter);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter,1));
         itemTouchHelper.attachToRecyclerView(taskRecyclerView);
 
         Intent intent = getIntent();
