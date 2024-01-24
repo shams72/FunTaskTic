@@ -126,13 +126,32 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
     public boolean onMenuItemClick(MenuItem item) {
         int itemId = item.getItemId();
 
-        if (itemId == R.id.hilfe) {
+        if (itemId == R.id.subitem1) {
 
-            Intent intent = new Intent(DoneActivity.this, helppage.class);
-            startActivity(intent);
+           //Code fur Tasks Einfugen Video
 
             return true;
-        } else if (itemId == R.id.abmelden) {
+        }
+        if (itemId == R.id.subitem2) {
+
+            //Code fur Tasks Loeschen Video
+
+            return true;
+        }
+        if (itemId == R.id.subitem3) {
+
+            //Code fur Tasks Editieren Video
+
+            return true;
+        }
+
+        if (itemId == R.id.subitem4) {
+
+            //Code fur Tasks Alle tasks Loeschen Video
+
+            return true;
+        }
+        else if (itemId == R.id.abmelden) {
 
             Toast.makeText(DoneActivity.this, "Abmeldung erfolgreich! ", Toast.LENGTH_SHORT).show();
 

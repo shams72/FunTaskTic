@@ -59,7 +59,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
-         }
+        }
         else {
             if(direction == ItemTouchHelper.LEFT) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(adapter.getContext());
@@ -81,9 +81,10 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
-                else{
+
+            else{
                    adapter.editItem(position);
-                }
+            }
         }
     }
 

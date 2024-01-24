@@ -108,13 +108,32 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
     public boolean onMenuItemClick(MenuItem item) {
         int itemId = item.getItemId();
 
-        if (itemId == R.id.hilfe) {
+        if (itemId == R.id.subitem1) {
 
-            Intent intent = new Intent(ThirdActivity.this, helppage.class);
-            startActivity(intent);
+            //Code fur Tasks Einfugen Video
 
             return true;
-        } else if (itemId == R.id.abmelden) {
+        }
+        if (itemId == R.id.subitem2) {
+
+            //Code fur Tasks Loeschen Video
+
+            return true;
+        }
+        if (itemId == R.id.subitem3) {
+
+            //Code fur Tasks Editieren Video
+
+            return true;
+        }
+
+        if (itemId == R.id.subitem4) {
+
+            //Code fur Tasks Alle tasks Loeschen Video
+
+            return true;
+        }
+        else if (itemId == R.id.abmelden) {
 
             Toast.makeText(ThirdActivity.this, "Abmeldung erfolgreich! ", Toast.LENGTH_SHORT).show();
 
