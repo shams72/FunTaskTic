@@ -30,11 +30,20 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     private Activity activity;
     private DatabaseHandler db;
 
+    int touchactivity=0;
     public ToDoAdapter(DatabaseHandler db, Activity activity) {
         this.db = db;
         this.activity = activity;
         //this.toDoList = new ArrayList<>();
     }
+
+    public ToDoAdapter(DatabaseHandler db, Activity activity,int touchactivity) {
+        this.db = db;
+        this.activity = activity;
+        this.touchactivity = touchactivity;
+        //this.toDoList = new ArrayList<>();
+    }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -53,11 +62,18 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(touchactivity<=0){
                 if (isChecked) {
+
                     db.updateStatus(item.getId(), 1);
                 }
                 else {
                     db.updateStatus(item.getId(), 0);
+                }
+                }else{
+                    db.updateStatus(item.getId(), 1);
+                    holder.task.setChecked(true);
                 }
             }
         });

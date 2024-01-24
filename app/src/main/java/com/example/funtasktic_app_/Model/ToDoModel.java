@@ -4,9 +4,6 @@ public class ToDoModel {
     private int id,status;
     private String task;
     private String Username;
-
-
-
     private String Priority;
     private String Date;
     public String getDate() {

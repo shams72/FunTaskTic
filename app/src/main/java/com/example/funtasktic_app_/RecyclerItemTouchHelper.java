@@ -17,9 +17,17 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     private ToDoAdapter adapter;
 
+    int LeftSwippeOnly=0;
+
     public RecyclerItemTouchHelper(ToDoAdapter adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.adapter = adapter;
+    }
+
+    public RecyclerItemTouchHelper(ToDoAdapter adapter,int leftSwippeOnly) {
+        super(0, ItemTouchHelper.LEFT);
+        this.adapter = adapter;
+        this.LeftSwippeOnly=leftSwippeOnly;
     }
 
     @Override
@@ -30,6 +38,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     @Override
     public  void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
         final int position = viewHolder.getAbsoluteAdapterPosition();
+        if(LeftSwippeOnly>0){
         if (direction == ItemTouchHelper.LEFT) {
             AlertDialog.Builder builder = new AlertDialog.Builder(adapter.getContext());
             builder.setTitle("Task löschen");
@@ -50,8 +59,31 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+         }
         else {
-            adapter.editItem(position);
+            if(direction == ItemTouchHelper.LEFT) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(adapter.getContext());
+                builder.setTitle("Task löschen");
+                builder.setMessage("Sind Sie sicher, dass Sie diese Task löshen wollen?");
+                builder.setPositiveButton("Bestätigen", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        adapter.deleteItem(position);
+                    }
+                });
+                builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        adapter.notifyItemChanged(viewHolder.getAbsoluteAdapterPosition());
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+                else{
+                   adapter.editItem(position);
+                }
         }
     }
 
