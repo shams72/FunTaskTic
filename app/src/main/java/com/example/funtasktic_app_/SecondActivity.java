@@ -136,7 +136,15 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
             startActivity(intent);
 
             return true;
-        } else {
+        }
+
+        else if (itemId == R.id.TaskErledigte) {
+            Intent intent = new Intent(SecondActivity.this, DoneActivity.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            startActivity(intent);
+            return true;
+        }
+        else {
             return false;
         }
     }

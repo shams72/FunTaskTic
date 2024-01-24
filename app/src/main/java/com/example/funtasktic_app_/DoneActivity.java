@@ -90,6 +90,7 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
 
                 }
             }
+
         });
 
         buttonToMain = findViewById(R.id.buttonToMainFromDone);
@@ -117,7 +118,7 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
     public void showPopupDone(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.popup_menu);
+        popup.inflate(R.menu.popup_menu2);
         popup.show();
     }
 
@@ -139,7 +140,18 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
             startActivity(intent);
 
             return true;
-        } else {
+        }
+        else if (itemId == R.id.Home) {
+
+            Intent intent = new Intent(DoneActivity.this, MainActivity.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+
+            return true;
+        }
+
+        else {
             return false;
         }
     }

@@ -64,7 +64,6 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
 
         taskList = db.getTasksByPriority("Low",username);
         Collections.reverse(taskList);
-
         taskAdapter.setTasks(taskList);
 
 
@@ -123,7 +122,15 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
             startActivity(intent);
 
             return true;
-        } else {
+
+        }  else if (itemId == R.id.TaskErledigte) {
+            Intent intent = new Intent(ThirdActivity.this, DoneActivity.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            startActivity(intent);
+            return true;
+        }
+
+        else {
             return false;
         }
     }

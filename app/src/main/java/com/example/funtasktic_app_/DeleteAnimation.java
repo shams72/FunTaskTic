@@ -50,7 +50,7 @@ public class DeleteAnimation extends AppCompatActivity {
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                Intent intent = new Intent(DeleteAnimation.this, MainActivity.class);
+                Intent intent = new Intent(DeleteAnimation.this, DoneActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);

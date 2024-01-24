@@ -123,6 +123,10 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         popup.show();
     }
 
+
+
+
+
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         int itemId = item.getItemId();
@@ -141,6 +145,12 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
             startActivity(intent);
 
             return true;
+        } else if (itemId == R.id.TaskErledigte) {
+            Intent intent = new Intent(MainActivity.this, DoneActivity.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            startActivity(intent);
+            return true;
+
         } else {
             return false;
         }
