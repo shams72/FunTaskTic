@@ -21,12 +21,14 @@
         android:id="@+id/buttonToSecond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tasksTextThird"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="-18dp"
-        android:layout_marginTop="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
         android:background="@android:color/transparent"
-        android:drawableRight="@drawable/baseline_keyboard_arrow_left" />
+        android:drawableLeft="@drawable/baseline_arrow_circle_left_24" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasksRecyclerViewThird"

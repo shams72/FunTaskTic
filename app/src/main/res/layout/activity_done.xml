@@ -21,10 +21,14 @@
         android:id="@+id/buttonToMainFromDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tasksTextDone"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
         android:background="@android:color/transparent"
-        android:drawableRight="@drawable/baseline_keyboard_arrow_right" />
+        android:drawableRight="@drawable/baseline_arrow_circle_right_24" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasksRecyclerViewDone"
