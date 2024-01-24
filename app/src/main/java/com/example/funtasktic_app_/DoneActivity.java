@@ -24,27 +24,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements DialogCloseListener, PopupMenu.OnMenuItemClickListener {
+public class DoneActivity extends AppCompatActivity implements DialogCloseListener, PopupMenu.OnMenuItemClickListener {
 
-    private RecyclerView taskRecyclerView;
+    private List<ToDoModel> taskList;
     private ToDoAdapter taskAdapter;
-    private FloatingActionButton fab;
-    private List<ToDoModel>taskList;
     private DatabaseHandler db;
-    private Button buttonToSecond;
-    private Button buttonToDone;
-
+    private RecyclerView taskRecyclerView;
+    private Button buttonToMain;
+    private FloatingActionButton deleteChecked;
     String username;
-
     String Username2;
 
-    private  Button  buttonHelp;
-
+    int attempts = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_done);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -55,20 +50,18 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
         taskList=new ArrayList<>();
 
-        taskRecyclerView=findViewById(R.id.tasksRecyclerView);
+        taskRecyclerView=findViewById(R.id.tasksRecyclerViewDone);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         taskAdapter =new ToDoAdapter(db,this);
         taskRecyclerView.setAdapter(taskAdapter);
-
-        fab = findViewById(R.id.fab);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
         itemTouchHelper.attachToRecyclerView(taskRecyclerView);
 
         Intent intent = getIntent();
         username = intent.getStringExtra("USERNAME_EXTRA");
-        taskList = db.getTasksByPriority("High",username);
 
+        taskList = db.getAllDoneTasks(username);
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
 
@@ -76,47 +69,52 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         Username2 = user.getStringExtra("USERNAME");
 
 
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        deleteChecked = findViewById(R.id.deleteChecked);
+        deleteChecked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddNewTask.newInstance(username).show(getSupportFragmentManager(), AddNewTask.TAG);
-            }
-        });
 
+               /* db.deleteDoneTask(username);
+                taskAdapter.notifyDataSetChanged();*/
 
-        buttonToSecond = findViewById(R.id.buttonToSecond);
-        buttonToSecond.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                if(db.deleteDoneTask(username)>0){
+                taskAdapter.notifyDataSetChanged();
+                Intent intent = new Intent(DoneActivity.this, DeleteAnimation.class);
                 intent.putExtra("USERNAME_EXTRA", username);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                }else{
+                    Toast.makeText(DoneActivity.this, "Es wurden keine Aufgaben gelöscht. ", Toast.LENGTH_SHORT).show();
+
+
+                }
             }
         });
 
-        buttonToDone = findViewById(R.id.buttonToDone);
-        buttonToDone.setOnClickListener(new View.OnClickListener() {
+        buttonToMain = findViewById(R.id.buttonToMainFromDone);
+        buttonToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DoneActivity.class);
+                Intent intent = new Intent(DoneActivity.this, MainActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
+
         });
     }
 
     @Override
     public void handleDialogClose(DialogInterface dialog) {
-        taskList = db.getTasksByPriority("High",username);
+        taskList = db.getAllDoneTasks(username);
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
         taskAdapter.notifyDataSetChanged();
 
     }
 
-    public void showPopupMain(View v) {
+    public void showPopupDone(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this);
         popup.inflate(R.menu.popup_menu);
@@ -129,15 +127,15 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
         if (itemId == R.id.hilfe) {
 
-            Intent intent = new Intent(MainActivity.this, helppage.class);
+            Intent intent = new Intent(DoneActivity.this, helppage.class);
             startActivity(intent);
 
             return true;
         } else if (itemId == R.id.abmelden) {
 
-            Toast.makeText(MainActivity.this, "Abmeldung erfolgreich! ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DoneActivity.this, "Abmeldung erfolgreich! ", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(MainActivity.this, LoginPage.class);
+            Intent intent = new Intent(DoneActivity.this, LoginPage.class);
             startActivity(intent);
 
             return true;

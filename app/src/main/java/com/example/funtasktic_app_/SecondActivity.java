@@ -4,14 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.example.funtasktic_app_.Adapter.ToDoAdapter;
 import com.example.funtasktic_app_.Model.ToDoModel;
@@ -21,10 +23,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
-import kotlin.collections.ArrayDeque;
-public class SecondActivity extends AppCompatActivity implements DialogCloseListener{
+public class SecondActivity extends AppCompatActivity implements DialogCloseListener, PopupMenu.OnMenuItemClickListener {
 
     private RecyclerView taskRecyclerView;
     private ToDoAdapter taskAdapter;
@@ -81,13 +81,12 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
         buttonToMain = findViewById(R.id.buttonToMain);
         buttonToMain.setOnClickListener(new View.OnClickListener() {
             @Override
-
-                public void onClick(View v) {
-                    Intent intent = new Intent(SecondActivity.this, MainActivity.class);
-                    intent.putExtra("USERNAME_EXTRA", username);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-                }
+            public void onClick(View v) {
+                Intent intent = new Intent(SecondActivity.this, MainActivity.class);
+                intent.putExtra("USERNAME_EXTRA", username);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+            }
 
         });
 
@@ -98,6 +97,7 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
                 Intent intent = new Intent(SecondActivity.this ,ThirdActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
     }
@@ -109,5 +109,35 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
         taskAdapter.setTasks(taskList);
         taskAdapter.notifyDataSetChanged();
 
+    }
+
+    public void showPopupSecond(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.popup_menu);
+        popup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.hilfe) {
+
+            Intent intent = new Intent(SecondActivity.this, helppage.class);
+            startActivity(intent);
+
+            return true;
+        } else if (itemId == R.id.abmelden) {
+
+            Toast.makeText(SecondActivity.this, "Abmeldung erfolgreich! ", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(SecondActivity.this, LoginPage.class);
+            startActivity(intent);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

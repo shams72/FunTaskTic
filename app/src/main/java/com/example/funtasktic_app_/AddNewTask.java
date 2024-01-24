@@ -34,7 +34,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private Button newTaskSaveButton;
     private DatabaseHandler db;
     private RadioButton highRadioButton, mediumRadioButton, lowRadioButton;
-    private String selectedPriority = "";
+    private String selectedPriority = "High";
 
     private String Username;
 
@@ -207,7 +207,9 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         task.setPriority(selectedPriority);
                         task.setDate(Date);
                         task.setUserName(Username);
+                        if(selectedPriority!=""){
                         db.insertTask(task);
+                        }
                     }
                     dismiss();
                 }

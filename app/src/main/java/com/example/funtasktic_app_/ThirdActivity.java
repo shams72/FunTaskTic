@@ -5,11 +5,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.funtasktic_app_.Adapter.ToDoAdapter;
@@ -20,7 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-public class ThirdActivity extends AppCompatActivity implements DialogCloseListener{
+public class ThirdActivity extends AppCompatActivity implements DialogCloseListener, PopupMenu.OnMenuItemClickListener {
 
     private RecyclerView taskRecyclerView;
     private ToDoAdapter taskAdapter;
@@ -36,17 +39,6 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
-        abmelden = findViewById(R.id.abmeldenbtn);
-        abmelden.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(ThirdActivity.this, "Abmeldung erfolgreich! ", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(ThirdActivity.this, LoginPage.class);
-                startActivity(intent);
-            }
-
-        });
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -92,7 +84,7 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
                 Intent intent = new Intent(ThirdActivity.this ,SecondActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
     }
@@ -104,5 +96,35 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
         taskAdapter.setTasks(taskList);
         taskAdapter.notifyDataSetChanged();
 
+    }
+
+    public void showPopupThird(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.popup_menu);
+        popup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.hilfe) {
+
+            Intent intent = new Intent(ThirdActivity.this, helppage.class);
+            startActivity(intent);
+
+            return true;
+        } else if (itemId == R.id.abmelden) {
+
+            Toast.makeText(ThirdActivity.this, "Abmeldung erfolgreich! ", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(ThirdActivity.this, LoginPage.class);
+            startActivity(intent);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }
