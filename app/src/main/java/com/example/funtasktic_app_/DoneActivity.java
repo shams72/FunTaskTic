@@ -115,6 +115,14 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
 
     }
 
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(DoneActivity.this, MainActivity.class);
+        intent.putExtra("USERNAME_EXTRA", username);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+
+    }
     public void showPopupDone(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this);
