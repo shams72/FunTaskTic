@@ -16,6 +16,8 @@ public class DeleteAnimation extends AppCompatActivity {
     private VideoView videoView;
     private String username;
 
+    private String screen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +27,7 @@ public class DeleteAnimation extends AppCompatActivity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra("USERNAME_EXTRA");
+        screen = intent.getStringExtra("Screen");
 
         String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.deleteanimation;
         Uri uri = Uri.parse(videoPath);
@@ -52,6 +55,7 @@ public class DeleteAnimation extends AppCompatActivity {
             public void onCompletion(MediaPlayer mp) {
                 Intent intent = new Intent(DeleteAnimation.this, DoneActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
+                intent.putExtra("Screen_Extra",screen);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }

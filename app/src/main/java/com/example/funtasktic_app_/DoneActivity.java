@@ -1,5 +1,6 @@
 package com.example.funtasktic_app_;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +36,9 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
     String username;
     String Username2;
 
-    String Screen;
+    String Screen="Home";
+
+    String Screen2;
     int attempts = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,7 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
 
         Intent screen = getIntent();
         Screen =  screen.getStringExtra("Screen");
+        Screen2 = screen.getStringExtra("Screen_Extra");
 
 
 
@@ -86,6 +90,7 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
                 taskAdapter.notifyDataSetChanged();
                 Intent intent = new Intent(DoneActivity.this, DeleteAnimation.class);
                 intent.putExtra("USERNAME_EXTRA", username);
+                intent.putExtra("Screen",Screen);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 }else{
@@ -108,6 +113,34 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
             }
 
         });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if("Home".equals(Screen) ||"Home".equals(Screen2) ){
+                    Intent intent = new Intent(DoneActivity.this, MainActivity.class);
+                    intent.putExtra("USERNAME_EXTRA", username);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                }
+                else if("Middle".equals(Screen) || "Middle".equals(Screen2)){
+                    Intent intent = new Intent(DoneActivity.this, SecondActivity.class);
+                    intent.putExtra("USERNAME_EXTRA", username);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                }else if("Last".equals(Screen)||"Last".equals(Screen2)){
+                    Intent intent = new Intent(DoneActivity.this, ThirdActivity.class);
+                    intent.putExtra("USERNAME_EXTRA", username);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                }
+
+            }
+        };
+
+        // Add the callback to the OnBackPressedDispatcher
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     @Override
@@ -119,28 +152,10 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
 
     }
 
-    public void onBackPressed() {
-        super.onBackPressed();
 
-        if(Screen == "Home"){
-        Intent intent = new Intent(DoneActivity.this, MainActivity.class);
-        intent.putExtra("USERNAME_EXTRA", username);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-        }
-        else if(Screen == "Middle"){
-            Intent intent = new Intent(DoneActivity.this, SecondActivity.class);
-            intent.putExtra("USERNAME_EXTRA", username);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-        }else if(Screen == "Last"){
-            Intent intent = new Intent(DoneActivity.this, ThirdActivity.class);
-            intent.putExtra("USERNAME_EXTRA", username);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-        }
 
-    }
+
+
     public void showPopupDone(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this);
