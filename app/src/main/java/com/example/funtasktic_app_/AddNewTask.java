@@ -147,7 +147,10 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
         boolean finalIsUpdate = isUpdate;
         final int[] index = {0};
+        date = Calendar.getInstance();
         CalendarView calendarView = getView().findViewById(R.id.calendarView);
+
+        calendarView.setDate(date.getTimeInMillis(), false, true);
 
 
         newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
@@ -216,6 +219,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
             }
         });
+
+
 
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
