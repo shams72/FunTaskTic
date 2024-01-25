@@ -33,6 +33,8 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
     private Button buttonToSecond;
     private String username;
 
+    String Screen="Last";
+
     private Button abmelden;
 
     @Override
@@ -145,6 +147,7 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
         }  else if (itemId == R.id.TaskErledigte) {
             Intent intent = new Intent(ThirdActivity.this, DoneActivity.class);
             intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("Screen",Screen);
             startActivity(intent);
             return true;
         }

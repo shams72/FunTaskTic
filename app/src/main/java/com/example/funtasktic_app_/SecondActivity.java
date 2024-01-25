@@ -34,6 +34,7 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
     private Button buttonToMain;
     private Button buttonToThird;
 
+    private String Screen="Middle";
     private String username;
 
 
@@ -159,6 +160,7 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
         else if (itemId == R.id.TaskErledigte) {
             Intent intent = new Intent(SecondActivity.this, DoneActivity.class);
             intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("Screen",Screen);
             startActivity(intent);
             return true;
         }

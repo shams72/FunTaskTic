@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
     String username;
 
+    String Screen="Home";
     String Username2;
 
     private  Button  buttonHelp;
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, DoneActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
+                intent.putExtra("Screen",Screen);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
@@ -166,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         } else if (itemId == R.id.TaskErledigte) {
             Intent intent = new Intent(MainActivity.this, DoneActivity.class);
             intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("Screen",Screen);
             startActivity(intent);
             return true;
 

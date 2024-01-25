@@ -35,6 +35,7 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
     String username;
     String Username2;
 
+    String Screen;
     int attempts = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,9 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
 
         Intent user = getIntent();
         Username2 = user.getStringExtra("USERNAME");
+
+        Intent screen = getIntent();
+        Screen =  screen.getStringExtra("Screen");
 
 
 
@@ -117,10 +121,24 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
 
     public void onBackPressed() {
         super.onBackPressed();
+
+        if(Screen == "Home"){
         Intent intent = new Intent(DoneActivity.this, MainActivity.class);
         intent.putExtra("USERNAME_EXTRA", username);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+        }
+        else if(Screen == "Middle"){
+            Intent intent = new Intent(DoneActivity.this, SecondActivity.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+        }else if(Screen == "Last"){
+            Intent intent = new Intent(DoneActivity.this, ThirdActivity.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+        }
 
     }
     public void showPopupDone(View v) {
