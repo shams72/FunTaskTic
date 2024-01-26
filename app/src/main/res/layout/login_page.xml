@@ -29,7 +29,7 @@
         android:layout_height="41dp"
         android:layout_marginTop="84dp"
         android:hint=" Username"
-
+        android:drawableLeft="@drawable/ic_action_name"
         android:background="@drawable/rounde_edges"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
         android:layout_width="367dp"
         android:layout_height="41dp"
         android:layout_marginTop="76dp"
-
+        android:drawableLeft="@drawable/ic_action_password"
         android:background="@drawable/rounde_edges"
         android:hint=" Password"
         android:password="true"

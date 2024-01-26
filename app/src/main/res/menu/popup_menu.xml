@@ -6,7 +6,8 @@
         android:id="@+id/TaskErledigte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="Erledigte Task" />
+        android:title="Erledigte Task"/>
+
     <item
         android:id="@+id/hilfe"
         android:title="Hilfe">
