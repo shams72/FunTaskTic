@@ -89,7 +89,7 @@
         android:id="@+id/textView"
         android:layout_width="187dp"
         android:layout_height="46dp"
-        android:text="  Anmelden"
+        android:text="  Regestrieren"
         android:textColor="#E8E1E1"
         android:textSize="34sp"
         android:textStyle="bold"
