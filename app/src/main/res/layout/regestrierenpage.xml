@@ -87,9 +87,10 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="187dp"
-        android:layout_height="46dp"
-        android:text="  Regestrieren"
+        android:layout_width="358dp"
+        android:layout_height="54dp"
+        android:text=" Regestrieren"
+        android:textAlignment="center"
         android:textColor="#E8E1E1"
         android:textSize="34sp"
         android:textStyle="bold"
