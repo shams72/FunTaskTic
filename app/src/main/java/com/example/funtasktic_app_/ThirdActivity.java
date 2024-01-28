@@ -1,5 +1,6 @@
 package com.example.funtasktic_app_;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,7 +34,14 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
     private Button buttonToSecond;
     private String username;
 
+    private String videotype;
+
+    private String Screen_Type="Third";
     String Screen="Last";
+
+    String current_screen="Third";
+
+    String Help="Help";
 
     private Button abmelden;
 
@@ -84,10 +92,21 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
             public void onClick(View v) {
                 Intent intent = new Intent(ThirdActivity.this ,SecondActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
+                intent.putExtra("current_screen",current_screen);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if("Help".equals(Help)){
+
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -111,31 +130,53 @@ public class ThirdActivity extends AppCompatActivity implements DialogCloseListe
         int itemId = item.getItemId();
 
         if (itemId == R.id.subitem1) {
+            videotype ="Insert_Edit";
 
-            //Code fur Tasks Einfugen Video
+            Intent intent = new Intent(ThirdActivity.this, helppage.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("VideoTask",videotype);
+            intent.putExtra("Screen",Screen_Type);
+            intent.putExtra("current_screen",current_screen);
+            startActivity(intent);
 
             return true;
         }
         if (itemId == R.id.subitem2) {
 
-            //Code fur Tasks Loeschen Video
+            videotype ="Delete";
+            Intent intent = new Intent(ThirdActivity.this, helppage.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("VideoTask",videotype);
+            intent.putExtra("Screen",Screen_Type);
+            intent.putExtra("current_screen",current_screen);
+            startActivity(intent);
+
 
             return true;
         }
         if (itemId == R.id.subitem3) {
 
-            //Code fur Tasks Editieren Video
-
+            videotype ="Edit";
+            Intent intent = new Intent(ThirdActivity.this, helppage.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("VideoTask",videotype);
+            intent.putExtra("Screen",Screen_Type);
+            intent.putExtra("current_screen",current_screen);
+            startActivity(intent);
             return true;
         }
 
         if (itemId == R.id.subitem4) {
 
-            //Code fur Tasks Alle tasks Loeschen Video
-
+            videotype ="Alldelete";
+            Intent intent = new Intent(ThirdActivity.this, helppage.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("Screen",Screen_Type);
+            intent.putExtra("VideoTask",videotype);
+            intent.putExtra("current_screen",current_screen);
+            startActivity(intent);
             return true;
-        }
-        else if (itemId == R.id.abmelden) {
+        }else if (itemId == R.id.abmelden) {
 
             Toast.makeText(ThirdActivity.this, "Abmeldung erfolgreich! ", Toast.LENGTH_SHORT).show();
 

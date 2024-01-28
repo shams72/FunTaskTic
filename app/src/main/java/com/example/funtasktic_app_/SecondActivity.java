@@ -1,5 +1,6 @@
 package com.example.funtasktic_app_;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,6 +37,13 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
 
     private String Screen="Middle";
     private String username;
+    private String videotype;
+
+    String current_screen="Second";
+
+    String Help="Help";
+
+    String Screen_Type="Second";
 
 
     @Override
@@ -85,6 +93,7 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
             public void onClick(View v) {
                 Intent intent = new Intent(SecondActivity.this, MainActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
+                intent.putExtra("current_screen",current_screen);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
@@ -97,10 +106,21 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
             public void onClick(View v) {
                 Intent intent = new Intent(SecondActivity.this ,ThirdActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
+                intent.putExtra("current_screen",current_screen);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if("Help".equals(Help)){
+
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -124,30 +144,54 @@ public class SecondActivity extends AppCompatActivity implements DialogCloseList
         int itemId = item.getItemId();
 
         if (itemId == R.id.subitem1) {
+            videotype ="Insert_Edit";
 
-            //Code fur Tasks Einfugen Video
+            Intent intent = new Intent(SecondActivity.this, helppage.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("VideoTask",videotype);
+            intent.putExtra("Screen",Screen_Type);
+            intent.putExtra("current_screen",current_screen);
+            startActivity(intent);
 
             return true;
         }
         if (itemId == R.id.subitem2) {
 
-            //Code fur Tasks Loeschen Video
+            videotype ="Delete";
+            Intent intent = new Intent(SecondActivity.this, helppage.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("VideoTask",videotype);
+            intent.putExtra("Screen",Screen_Type);
+            intent.putExtra("current_screen",current_screen);
+            startActivity(intent);
+
 
             return true;
         }
         if (itemId == R.id.subitem3) {
 
-            //Code fur Tasks Editieren Video
+            videotype ="Edit";
+            Intent intent = new Intent(SecondActivity.this, helppage.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("VideoTask",videotype);
+            intent.putExtra("Screen",Screen_Type);
+            intent.putExtra("current_screen",current_screen);
+            startActivity(intent);
 
             return true;
         }
 
         if (itemId == R.id.subitem4) {
 
-            //Code fur Tasks Alle tasks Loeschen Video
-
+            videotype ="Alldelete";
+            Intent intent = new Intent(SecondActivity.this, helppage.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("VideoTask",videotype);
+            intent.putExtra("Screen",Screen_Type);
+            intent.putExtra("current_screen",current_screen);
+            startActivity(intent);
             return true;
-        } else if (itemId == R.id.abmelden) {
+        }  else if (itemId == R.id.abmelden) {
 
             Toast.makeText(SecondActivity.this, "Abmeldung erfolgreich! ", Toast.LENGTH_SHORT).show();
 

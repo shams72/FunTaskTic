@@ -1,5 +1,6 @@
 package com.example.funtasktic_app_;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,16 +30,29 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
     private RecyclerView taskRecyclerView;
     private ToDoAdapter taskAdapter;
+    private helppage help;
     private FloatingActionButton fab;
     private List<ToDoModel>taskList;
     private DatabaseHandler db;
     private Button buttonToSecond;
     private Button buttonToDone;
 
+    private String videotype;
+
     String username;
 
+    String Screen_Type="Home";
+
     String Screen="Home";
+
     String Username2;
+
+    String current_screen="Main";
+    String last_screen;
+
+
+
+    String Help;
 
     private  Button  buttonHelp;
 
@@ -76,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
         Intent user = getIntent();
         Username2 = user.getStringExtra("USERNAME");
+        Help=user.getStringExtra("Help");
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
+                intent.putExtra("current_screen",current_screen);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
@@ -104,10 +120,24 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
                 Intent intent = new Intent(MainActivity.this, DoneActivity.class);
                 intent.putExtra("USERNAME_EXTRA", username);
                 intent.putExtra("Screen",Screen);
+                intent.putExtra("current_screen",current_screen);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
+
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if("Help".equals(Help)){
+
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
+
     }
 
     @Override
@@ -135,32 +165,59 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         int itemId = item.getItemId();
 
         if (itemId == R.id.subitem1) {
+            videotype ="Insert_Edit";
 
-            //Code fur Tasks Einfugen Video
+            Intent intent = new Intent(MainActivity.this, helppage.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("VideoTask",videotype);
+            intent.putExtra("Screen",Screen_Type);
+            intent.putExtra("Screen",Screen);
+            intent.putExtra("current_screen",current_screen);
+            startActivity(intent);
 
             return true;
         }
         if (itemId == R.id.subitem2) {
 
-            //Code fur Tasks Loeschen Video
+            videotype ="Delete";
+            Screen_Type="Home";
+            Intent intent = new Intent(MainActivity.this, helppage.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("VideoTask",videotype);
+            intent.putExtra("Screen",Screen_Type);
+            intent.putExtra("current_screen",current_screen);
+            startActivity(intent);
+
 
             return true;
         }
         if (itemId == R.id.subitem3) {
 
-            //Code fur Tasks Editieren Video
-
+            videotype ="Edit";
+            Intent intent = new Intent(MainActivity.this, helppage.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("VideoTask",videotype);
+            intent.putExtra("Screen",Screen_Type);
+            intent.putExtra("Screen",Screen);
+            intent.putExtra("current_screen",current_screen);
+            startActivity(intent);
             return true;
         }
 
         if (itemId == R.id.subitem4) {
 
-            //Code fur Tasks Alle tasks Loeschen Video
-
+            videotype ="Alldelete";
+            Intent intent = new Intent(MainActivity.this, helppage.class);
+            intent.putExtra("USERNAME_EXTRA", username);
+            intent.putExtra("VideoTask",videotype);
+            intent.putExtra("Screen",Screen_Type);
+            intent.putExtra("current_screen",current_screen);
+            startActivity(intent);
             return true;
         } else if (itemId == R.id.abmelden) {
 
             Toast.makeText(MainActivity.this, "Abmeldung erfolgreich! ", Toast.LENGTH_SHORT).show();
+
 
             Intent intent = new Intent(MainActivity.this, LoginPage.class);
             startActivity(intent);

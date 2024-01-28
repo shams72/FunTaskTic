@@ -47,7 +47,7 @@ public class DeleteAnimation extends AppCompatActivity {
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                videoView.start();  // Start video playback when prepared
+                videoView.start();
             }
         });
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
