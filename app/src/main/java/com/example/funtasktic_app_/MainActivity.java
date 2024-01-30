@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
                 intent.putExtra("USERNAME_EXTRA", username);
                 intent.putExtra("current_screen",current_screen);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
 
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
                 intent.putExtra("Screen",Screen);
                 intent.putExtra("current_screen",current_screen);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
 
