@@ -25,8 +25,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String DATE="DATE";
 
     private static final String USERNAME="USERNAME";//USERNAME IS A COMBINATION
-                                                    // OF USERNAME AND PASSWORD
-                                                    // IN DATABANK
+    // OF USERNAME AND PASSWORD
+    // IN DATABANK
     private static final String CREATE_TO_DO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TASK + " TEXT, " +
@@ -51,6 +51,44 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TODO_TABLE);
         onCreate(db);
+    }
+    /**
+     * Retrieves the priority of a task based on the task text and username.
+     *
+     * @param taskText The text of the task.
+     * @param username The username associated with the task.
+     * @return The priority of the task if found, otherwise null.
+     */
+    public String getPriorityByTask(String taskText, String username) {
+        String priority = null;
+        Cursor cur = null;
+
+        try {
+            Log.d("DatabaseHandler", "Querying priority for task: " + taskText);
+
+            // Define a selection criteria where the task text and username match the provided values
+            String selection = TASK + "=? AND " + USERNAME + "=?";
+            String[] selectionArgs = {taskText, username};
+
+            // Query the database
+            cur = db.query(TODO_TABLE, new String[] {PRIORITY}, selection, selectionArgs, null, null, null);
+
+            // If the query returns a result, get the priority
+            if (cur != null && cur.moveToFirst()) {
+                int column_Priority_Index = cur.getColumnIndex(PRIORITY);
+                if (column_Priority_Index != -1) {
+                    priority = cur.getString(column_Priority_Index);
+                }
+            }
+        } catch (Exception e) {
+            Log.e("DatabaseHandler", "Error while getting priority", e);
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
+        }
+
+        return priority;
     }
 
     public void openDataBase(){
@@ -196,42 +234,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cur = db.query(TODO_TABLE, null, selection, selectionArgs, null, null, null);
 
             if(cur != null){
-             if (cur.moveToFirst()) {
-                do {
-                    ToDoModel task = new ToDoModel();
-                    int column_ID_Index = cur.getColumnIndex(ID);
-                    int column_TASK_Index = cur.getColumnIndex(TASK);
-                    int column_STATUS_Index = cur.getColumnIndex(STATUS);
-                    int coloum_Priority_Index = cur.getColumnIndex(PRIORITY);
-                    int coloum_Date_Index= cur.getColumnIndex(DATE);
-                    int coloum_Username_Index=cur.getColumnIndex(USERNAME);
+                if (cur.moveToFirst()) {
+                    do {
+                        ToDoModel task = new ToDoModel();
+                        int column_ID_Index = cur.getColumnIndex(ID);
+                        int column_TASK_Index = cur.getColumnIndex(TASK);
+                        int column_STATUS_Index = cur.getColumnIndex(STATUS);
+                        int coloum_Priority_Index = cur.getColumnIndex(PRIORITY);
+                        int coloum_Date_Index= cur.getColumnIndex(DATE);
+                        int coloum_Username_Index=cur.getColumnIndex(USERNAME);
 
-                    if (column_ID_Index != -1) {
-                        task.setId(cur.getInt(column_ID_Index));
-                    }
+                        if (column_ID_Index != -1) {
+                            task.setId(cur.getInt(column_ID_Index));
+                        }
 
-                    if (column_TASK_Index != -1) {
-                        task.setTask(cur.getString(column_TASK_Index));
-                    }
+                        if (column_TASK_Index != -1) {
+                            task.setTask(cur.getString(column_TASK_Index));
+                        }
 
-                    if (column_STATUS_Index != -1) {
-                        task.setStatus(cur.getInt(column_STATUS_Index));
-                    }
-                    if (coloum_Priority_Index != -1) {
-                        task.setPriority(cur.getString(coloum_Priority_Index));
-                    } else {
-                        task.setPriority("DefaultPriority");
-                    }
-                    if (column_ID_Index != -1) {
-                        task.setDate(cur.getString(coloum_Date_Index));
-                    }
-                    if (coloum_Username_Index != -1) {
-                        task.setUserName(cur.getString(coloum_Username_Index));
-                    }
-                    taskList.add(task);
+                        if (column_STATUS_Index != -1) {
+                            task.setStatus(cur.getInt(column_STATUS_Index));
+                        }
+                        if (coloum_Priority_Index != -1) {
+                            task.setPriority(cur.getString(coloum_Priority_Index));
+                        } else {
+                            task.setPriority("DefaultPriority");
+                        }
+                        if (column_ID_Index != -1) {
+                            task.setDate(cur.getString(coloum_Date_Index));
+                        }
+                        if (coloum_Username_Index != -1) {
+                            task.setUserName(cur.getString(coloum_Username_Index));
+                        }
+                        taskList.add(task);
 
-                } while (cur.moveToNext());
-            }}
+                    } while (cur.moveToNext());
+                }}
         } finally {
             if (cur != null) {
                 cur.close();
