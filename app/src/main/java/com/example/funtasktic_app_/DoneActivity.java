@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.Toast;
+import android.app.AlertDialog;
 
 import com.example.funtasktic_app_.Adapter.ToDoAdapter;
 import com.example.funtasktic_app_.Model.ToDoModel;
@@ -82,25 +83,35 @@ public class DoneActivity extends AppCompatActivity implements DialogCloseListen
         deleteChecked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               /* db.deleteDoneTask(username);
-                taskAdapter.notifyDataSetChanged();*/
-
-                if(db.deleteDoneTask(username)>0){
-                taskAdapter.notifyDataSetChanged();
-                Intent intent = new Intent(DoneActivity.this, DeleteAnimation.class);
-                intent.putExtra("USERNAME_EXTRA", username);
-                intent.putExtra("Screen",Screen);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-                }else{
-                    Toast.makeText(DoneActivity.this, "Es wurden keine Aufgaben gelöscht. ", Toast.LENGTH_SHORT).show();
-
-
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(DoneActivity.this);
+                builder.setTitle("Erledigte Tasks löschen");
+                builder.setMessage("Sind Sie sicher, dass Sie alle erledigten Tasks löshen wollen?")
+                        .setPositiveButton("Bestätigen", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (db.deleteDoneTask(username) > 0) {
+                                    taskAdapter.notifyDataSetChanged();
+                                    Intent intent = new Intent(DoneActivity.this, DeleteAnimation.class);
+                                    intent.putExtra("USERNAME_EXTRA", username);
+                                    intent.putExtra("Screen", Screen);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                                } else {
+                                    Toast.makeText(DoneActivity.this, "Es konnten keine Tasks gelöscht werden", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // User clicked No, do nothing
+                            }
+                        });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
-
         });
+
 
         buttonToMain = findViewById(R.id.buttonToMainFromDone);
         buttonToMain.setOnClickListener(new View.OnClickListener() {
