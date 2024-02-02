@@ -32,10 +32,6 @@ public class helppage extends AppCompatActivity {
 
     private String Help="Help";
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +46,7 @@ public class helppage extends AppCompatActivity {
         insert = intent.getStringExtra("VideoTask"); // Use insert here, not user
 
         if ("Insert_Edit".equals(insert)) {
-            String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.inserttaskk;
+            String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.newinserttask;
             Uri uri = Uri.parse(videoPath);
             videoView.setVideoURI(uri);
         } else if ("Delete".equals(insert)) {
@@ -62,7 +58,7 @@ public class helppage extends AppCompatActivity {
             Uri uri = Uri.parse(videoPath);
             videoView.setVideoURI(uri);
         } else if ("Alldelete".equals(insert)) {
-            String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.deletealltaskk;//delette from erledigt page
+            String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.alltaskhelpvideo;//delette from erledigt page
             Uri uri = Uri.parse(videoPath);
             videoView.setVideoURI(uri);
         } else {
