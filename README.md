@@ -14,3 +14,11 @@
 1. **Set Up Android Studio**: Ensure that Android Studio is installed on your computer.
 2. **Project Import**: Open Android Studio and import the FunTaskTic project files.
 3. **Launch the App**: Run FunTaskTic using the built-in Android emulator by clicking the "Run" button in Android Studio. The app will launch in the emulator, allowing you to experience its features firsthand.
+
+### Authors and acknowledgment
+
+- Fabrice Kallenbach
+- Marko Antonio Gil
+- Saad Bourbouh
+- Shams Kabir
+
